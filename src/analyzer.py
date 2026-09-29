@@ -3,7 +3,7 @@ import math
 from .config import ATM_STRIKE_WINDOW, SYMBOLS_CONFIG
 
 class OIAnalyzer:
-    """Quantitative Open Interest analyzer for NSE Option Chain data."""
+    """Institutional-grade Quantitative OI Analyzer with Strategic Action Playbooks."""
 
     def __init__(self, symbol: str = "NIFTY"):
         self.symbol = symbol
@@ -34,6 +34,9 @@ class OIAnalyzer:
         tot_ce_vol = 0
         tot_pe_vol = 0
 
+        atm_ce_ltp = 0.0
+        atm_pe_ltp = 0.0
+
         for row in chain_rows:
             strike = float(row.get("strikePrice", 0))
             ce = row.get("CE", {})
@@ -59,6 +62,10 @@ class OIAnalyzer:
             tot_ce_vol += ce_vol
             tot_pe_vol += pe_vol
 
+            if strike == atm_strike:
+                atm_ce_ltp = ce_ltp
+                atm_pe_ltp = pe_ltp
+
             # Buildup tags
             ce_buildup = self._classify_buildup(ce_chg, ce_chg_oi, is_call=True)
             pe_buildup = self._classify_buildup(pe_chg, pe_chg_oi, is_call=False)
@@ -83,34 +90,48 @@ class OIAnalyzer:
 
         parsed_strikes.sort(key=lambda x: x["strikePrice"])
 
-        # Calculate Max Pain
-        max_pain_strike = self._calculate_max_pain(parsed_strikes)
-
-        # Support & Resistance levels
-        sr_levels = self._extract_sr_levels(parsed_strikes, underlying_price)
-
-        # Filter window around ATM
+        # Filter strictly actionable ATM Window (ATM ± 10 strikes)
+        # to prevent far OTM retail / institutional hedge positions from skewing analysis
         atm_window_strikes = [
             s for s in parsed_strikes
             if abs(s["strikePrice"] - atm_strike) <= (ATM_STRIKE_WINDOW * self.strike_step)
         ]
 
-        # Put-Call Ratios
-        pcr_oi = round(tot_pe_oi / tot_ce_oi, 3) if tot_ce_oi > 0 else 1.0
-        pcr_vol = round(tot_pe_vol / tot_ce_vol, 3) if tot_ce_vol > 0 else 1.0
-        pcr_chg_oi = round(tot_pe_chg_oi / tot_ce_chg_oi, 3) if tot_ce_chg_oi != 0 else 1.0
+        # Calculate ATM Window specific metrics (Smart Money Battleground)
+        atm_ce_oi = sum(s["ce_oi"] for s in atm_window_strikes)
+        atm_pe_oi = sum(s["pe_oi"] for s in atm_window_strikes)
+        atm_ce_chg = sum(s["ce_chg_oi"] for s in atm_window_strikes)
+        atm_pe_chg = sum(s["pe_chg_oi"] for s in atm_window_strikes)
 
-        # Sentiment Assessment
-        sentiment_info = self._evaluate_sentiment(
+        atm_pcr_oi = round(atm_pe_oi / atm_ce_oi, 2) if atm_ce_oi > 0 else 1.0
+        atm_pcr_chg = round(atm_pe_chg / atm_ce_chg, 2) if atm_ce_chg != 0 else 1.0
+
+        # Overall (Full Chain) PCR
+        total_pcr_oi = round(tot_pe_oi / tot_ce_oi, 2) if tot_ce_oi > 0 else 1.0
+        total_pcr_vol = round(tot_pe_vol / tot_ce_vol, 2) if tot_ce_vol > 0 else 1.0
+
+        # ATM Straddle & Expected Expiry Range
+        atm_straddle_premium = round(atm_ce_ltp + atm_pe_ltp, 1)
+        expected_range_lower = round(atm_strike - atm_straddle_premium)
+        expected_range_upper = round(atm_strike + atm_straddle_premium)
+
+        # Calculate Max Pain
+        max_pain_strike = self._calculate_max_pain(parsed_strikes)
+
+        # Support & Resistance levels within actionable range
+        sr_levels = self._extract_sr_levels(atm_window_strikes, underlying_price)
+
+        # Generate Actionable Institutional Playbook & Trapped Writer Analysis
+        playbook = self._generate_strategic_playbook(
             underlying_price=underlying_price,
+            atm_strike=atm_strike,
             max_pain=max_pain_strike,
-            pcr_oi=pcr_oi,
-            pcr_chg_oi=pcr_chg_oi,
-            tot_ce_chg_oi=tot_ce_chg_oi,
-            tot_pe_chg_oi=tot_pe_chg_oi,
+            atm_pcr_oi=atm_pcr_oi,
+            atm_pcr_chg=atm_pcr_chg,
             sr_levels=sr_levels,
-            atm_strikes=atm_window_strikes,
-            atm_strike=atm_strike
+            atm_window_strikes=atm_window_strikes,
+            expected_range=(expected_range_lower, expected_range_upper),
+            atm_straddle=atm_straddle_premium
         )
 
         return {
@@ -120,19 +141,25 @@ class OIAnalyzer:
             "underlying_price": underlying_price,
             "atm_strike": atm_strike,
             "max_pain": max_pain_strike,
+            "atm_straddle": {
+                "premium": atm_straddle_premium,
+                "range_lower": expected_range_lower,
+                "range_upper": expected_range_upper
+            },
             "totals": {
                 "ce_oi": tot_ce_oi,
                 "pe_oi": tot_pe_oi,
-                "ce_chg_oi": tot_ce_chg_oi,
-                "pe_chg_oi": tot_pe_chg_oi,
-                "ce_vol": tot_ce_vol,
-                "pe_vol": tot_pe_vol,
-                "pcr_oi": pcr_oi,
-                "pcr_vol": pcr_vol,
-                "pcr_chg_oi": pcr_chg_oi
+                "pcr_oi": total_pcr_oi,
+                "pcr_vol": total_pcr_vol,
+                "atm_ce_oi": atm_ce_oi,
+                "atm_pe_oi": atm_pe_oi,
+                "atm_pcr_oi": atm_pcr_oi,
+                "atm_pcr_chg_oi": atm_pcr_chg,
+                "pcr_chg_oi": atm_pcr_chg
             },
             "sr_levels": sr_levels,
-            "sentiment": sentiment_info,
+            "sentiment": playbook["sentiment_meta"],
+            "playbook": playbook,
             "atm_window_strikes": atm_window_strikes,
             "all_strikes_count": len(parsed_strikes)
         }
@@ -142,12 +169,12 @@ class OIAnalyzer:
         """Classify derivative buildup based on price and OI change."""
         if oi_change > 0:
             if price_change > 0:
-                return "Long Buildup" if is_call else "Put Buying (Bearish Spec)"
+                return "Long Buildup" if is_call else "Put Buying (Hedging)"
             else:
                 return "Short Buildup (Call Writing)" if is_call else "Put Writing (Support Creation)"
         elif oi_change < 0:
             if price_change > 0:
-                return "Short Covering (Bullish Push)" if is_call else "Put Short Covering"
+                return "Short Covering (Bullish Squeeze)" if is_call else "Put Short Covering"
             else:
                 return "Long Unwinding" if is_call else "Put Long Unwinding"
         return "Neutral"
@@ -165,10 +192,8 @@ class OIAnalyzer:
                 k = row["strikePrice"]
                 ce_oi = row["ce_oi"]
                 pe_oi = row["pe_oi"]
-                # Call payout if candidate > k
                 if candidate > k:
                     total_loss += (candidate - k) * ce_oi
-                # Put payout if candidate < k
                 elif candidate < k:
                     total_loss += (k - candidate) * pe_oi
 
@@ -180,17 +205,13 @@ class OIAnalyzer:
 
     @staticmethod
     def _extract_sr_levels(strikes_data: List[Dict[str, Any]], spot: float) -> Dict[str, Any]:
-        """Extract primary and dynamic Support & Resistance strikes."""
-        # Top 2 Call OI strikes (Resistances)
+        """Extract primary and dynamic Support & Resistance strikes within active battleground."""
         sorted_ce_oi = sorted(strikes_data, key=lambda x: x["ce_oi"], reverse=True)
-        # Top 2 Put OI strikes (Supports)
         sorted_pe_oi = sorted(strikes_data, key=lambda x: x["pe_oi"], reverse=True)
 
-        # Dynamic additions (Highest positive OI change today)
         sorted_ce_chg = sorted(strikes_data, key=lambda x: x["ce_chg_oi"], reverse=True)
         sorted_pe_chg = sorted(strikes_data, key=lambda x: x["pe_chg_oi"], reverse=True)
 
-        # Unwinding (Most negative OI change)
         sorted_ce_unwind = sorted(strikes_data, key=lambda x: x["ce_chg_oi"])
         sorted_pe_unwind = sorted(strikes_data, key=lambda x: x["pe_chg_oi"])
 
@@ -211,103 +232,86 @@ class OIAnalyzer:
             "max_put_unwinding_strike": sorted_pe_unwind[0]["strikePrice"] if sorted_pe_unwind and sorted_pe_unwind[0]["pe_chg_oi"] < 0 else None,
         }
 
-    def _evaluate_sentiment(
+    def _generate_strategic_playbook(
         self,
         underlying_price: float,
+        atm_strike: float,
         max_pain: float,
-        pcr_oi: float,
-        pcr_chg_oi: float,
-        tot_ce_chg_oi: float,
-        tot_pe_chg_oi: float,
+        atm_pcr_oi: float,
+        atm_pcr_chg: float,
         sr_levels: Dict[str, Any],
-        atm_strikes: List[Dict[str, Any]],
-        atm_strike: float
+        atm_window_strikes: List[Dict[str, Any]],
+        expected_range: Tuple[float, float],
+        atm_straddle: float
     ) -> Dict[str, Any]:
-        """Compute composite sentiment score and market bias."""
-        bull_points = 0
-        bear_points = 0
-        signals = []
+        """Synthesize deep institutional insights, trapped writer zones, and trade setups."""
+        r1 = sr_levels.get("resistance_1", atm_strike + 100)
+        s1 = sr_levels.get("support_1", atm_strike - 100)
+        max_ce_add_strike = sr_levels.get("max_call_addition_strike", r1)
+        max_pe_add_strike = sr_levels.get("max_put_addition_strike", s1)
 
-        # 1. PCR OI Evaluation
-        if pcr_oi >= 1.25:
-            bull_points += 2
-            signals.append(f"High PCR ({pcr_oi}): Heavy Put writing cushions downside (Bullish)")
-        elif pcr_oi >= 1.05:
-            bull_points += 1
-            signals.append(f"Moderate PCR ({pcr_oi}): Mild bullish cushion")
-        elif pcr_oi <= 0.75:
-            bear_points += 2
-            signals.append(f"Low PCR ({pcr_oi}): Heavy Call writing caps upside (Bearish)")
-        elif pcr_oi <= 0.90:
-            bear_points += 1
-            signals.append(f"Sub-1 PCR ({pcr_oi}): Mild bearish overhang")
+        # Trapped Writer Detection
+        trapped_writers = []
+        if underlying_price > max_ce_add_strike and sr_levels.get("max_call_addition_oi", 0) > 0:
+            trapped_writers.append(f"Call writers trapped at {max_ce_add_strike:,.0f} (Spot is trading above fresh call addition). Short covering trigger active!")
+        elif underlying_price < max_pe_add_strike and sr_levels.get("max_put_addition_oi", 0) > 0:
+            trapped_writers.append(f"Put writers trapped at {max_pe_add_strike:,.0f} (Spot closed below fresh put addition). Long liquidation pressure elevated!")
         else:
-            signals.append(f"Neutral PCR ({pcr_oi}): Balanced Put/Call participation")
+            trapped_writers.append(f"Writers comfortable between Support {s1:,.0f} and Resistance {r1:,.0f}.")
 
-        # 2. Daily Change in OI (Fresh Writing bias)
-        net_fresh_oi = tot_pe_chg_oi - tot_ce_chg_oi
-        if pcr_chg_oi > 1.3 or (tot_pe_chg_oi > 0 and tot_ce_chg_oi < 0):
-            bull_points += 2
-            signals.append("Aggressive fresh Put writing over Calls today (Strong intraday bull support)")
-        elif pcr_chg_oi < 0.75 or (tot_ce_chg_oi > 0 and tot_pe_chg_oi < 0):
-            bear_points += 2
-            signals.append("Heavy Call writing added today over Puts (Strong intraday bear resistance)")
+        # Market Regime & Conviction
+        if atm_pcr_oi >= 1.25 and atm_pcr_chg >= 1.2:
+            regime = "STRONG_BULLISH_EXPANSION"
+            regime_desc = "Aggressive Put writing advancing higher. Bulls in full control."
+            color = "#10b981"
+        elif atm_pcr_oi >= 1.05 and atm_pcr_chg >= 0.9:
+            regime = "MILD_BULLISH_BIAS"
+            regime_desc = "Support holding firm with steady Put writing. Buy on dips towards S1."
+            color = "#34d399"
+        elif atm_pcr_oi <= 0.75 and atm_pcr_chg <= 0.75:
+            regime = "STRONG_BEARISH_EXPANSION"
+            regime_desc = "Heavy Call writing advancing lower. Bears dominating overhead supply."
+            color = "#ef4444"
+        elif atm_pcr_oi <= 0.90 and atm_pcr_chg <= 1.0:
+            regime = "MILD_BEARISH_PRESSURE"
+            regime_desc = "Overhead Call supply capping upside rallies. Sell on rise near R1."
+            color = "#f87171"
         else:
-            signals.append("Balanced intraday additions between Calls and Puts")
+            regime = "RANGEBOUND_CONSOLIDATION"
+            regime_desc = "Balanced two-way writing. Market trapped inside S1-R1 strangle corridor."
+            color = "#f59e0b"
 
-        # 3. Spot vs Max Pain
-        pain_diff = underlying_price - max_pain
-        if pain_diff > (self.strike_step * 1.5):
-            bull_points += 1
-            signals.append(f"Spot trading comfortably above Max Pain ({max_pain:.0f})")
-        elif pain_diff < -(self.strike_step * 1.5):
-            bear_points += 1
-            signals.append(f"Spot trading below Max Pain ({max_pain:.0f})")
+        # Actionable Triggers for next session
+        bullish_trigger = f"Break & 15-min sustain above {r1:,.0f} -> Triggers Call short covering towards {r1 + (self.strike_step * 2):,.0f}"
+        bearish_trigger = f"Break & 15-min sustain below {s1:,.0f} -> Triggers Put writer panic unwinding towards {s1 - (self.strike_step * 2):,.0f}"
+        range_play = f"Range corridor: {s1:,.0f} - {r1:,.0f} (Expect mean reversion within this band until breakout occurs)"
 
-        # 4. ATM Strike writing distribution (±3 strikes)
-        atm_focus = [s for s in atm_strikes if abs(s["strikePrice"] - atm_strike) <= (3 * self.strike_step)]
-        atm_ce_chg = sum(s["ce_chg_oi"] for s in atm_focus)
-        atm_pe_chg = sum(s["pe_chg_oi"] for s in atm_focus)
-        if atm_pe_chg > atm_ce_chg * 1.25:
-            bull_points += 1
-            signals.append("ATM cluster shows dominant Put writing (Building higher floor)")
-        elif atm_ce_chg > atm_pe_chg * 1.25:
-            bear_points += 1
-            signals.append("ATM cluster shows dominant Call writing (Pressure near spot)")
-
-        # 5. Unwinding signals
-        if sr_levels.get("max_call_unwinding_strike"):
-            bull_points += 1
-            signals.append(f"Call unwinding observed at strike {sr_levels['max_call_unwinding_strike']:.0f} (Shorts covering)")
-        if sr_levels.get("max_put_unwinding_strike"):
-            bear_points += 1
-            signals.append(f"Put unwinding observed at strike {sr_levels['max_put_unwinding_strike']:.0f} (Longs/Puts giving up)")
-
-        # Final Verdict Determination
-        net_score = bull_points - bear_points
-        if net_score >= 3:
-            verdict = "STRONG_BULLISH"
-            badge_color = "#10b981" # Green
-        elif net_score in (1, 2):
-            verdict = "MILD_BULLISH"
-            badge_color = "#34d399" # Light green
-        elif net_score in (-1, -2):
-            verdict = "MILD_BEARISH"
-            badge_color = "#f87171" # Light red
-        elif net_score <= -3:
-            verdict = "STRONG_BEARISH"
-            badge_color = "#ef4444" # Red
-        else:
-            verdict = "NEUTRAL_RANGEBOUND"
-            badge_color = "#fbbf24" # Yellow
+        # Smart Money Footprint Summary (2-3 crisp sentences)
+        smart_money_verdict = (
+            f"Active battleground (ATM ±10) shows an actionable PCR of {atm_pcr_oi:.2f} (Chg PCR: {atm_pcr_chg:.2f}). "
+            f"The primary ceiling is locked at {r1:,.0f} (Highest Call OI), while the major institutional floor sits at {s1:,.0f} (Highest Put OI). "
+            f"ATM straddle indicates an expected expiration boundary between {expected_range[0]:,.0f} and {expected_range[1]:,.0f}."
+        )
 
         return {
-            "verdict": verdict,
-            "score": net_score,
-            "badge_color": badge_color,
-            "bull_points": bull_points,
-            "bear_points": bear_points,
-            "signals": signals
+            "regime": regime,
+            "regime_desc": regime_desc,
+            "color": color,
+            "line_in_the_sand": atm_strike,
+            "smart_money_verdict": smart_money_verdict,
+            "trapped_writers": trapped_writers,
+            "bullish_trigger": bullish_trigger,
+            "bearish_trigger": bearish_trigger,
+            "range_play": range_play,
+            "expected_range": f"{expected_range[0]:,.0f} - {expected_range[1]:,.0f}",
+            "atm_straddle_pts": atm_straddle,
+            "sentiment_meta": {
+                "verdict": regime,
+                "badge_color": color,
+                "atm_pcr_oi": atm_pcr_oi,
+                "atm_pcr_chg": atm_pcr_chg,
+                "signals": [regime_desc] + trapped_writers
+            }
         }
 
     def detect_market_shift(
@@ -315,9 +319,7 @@ class OIAnalyzer:
         current_summary: Dict[str, Any],
         previous_summary: Optional[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """
-        Compare current EOD snapshot with previous day's snapshot to detect directional shifts.
-        """
+        """Compare current EOD snapshot with previous day's snapshot to detect structural shifts."""
         if not previous_summary:
             return {
                 "has_previous_data": False,
@@ -331,9 +333,9 @@ class OIAnalyzer:
         spot_change = curr_spot - prev_spot
         spot_change_pct = (spot_change / prev_spot * 100) if prev_spot > 0 else 0.0
 
-        prev_pcr = previous_summary.get("totals", {}).get("pcr_oi", 1.0)
-        curr_pcr = current_summary.get("totals", {}).get("pcr_oi", 1.0)
-        pcr_delta = round(curr_pcr - prev_pcr, 3)
+        prev_pcr = previous_summary.get("totals", {}).get("atm_pcr_oi", previous_summary.get("totals", {}).get("pcr_oi", 1.0))
+        curr_pcr = current_summary.get("totals", {}).get("atm_pcr_oi", 1.0)
+        pcr_delta = round(curr_pcr - prev_pcr, 2)
 
         prev_pain = previous_summary.get("max_pain", 0.0)
         curr_pain = current_summary.get("max_pain", 0.0)
@@ -348,10 +350,10 @@ class OIAnalyzer:
         curr_s1 = current_summary.get("sr_levels", {}).get("support_1", 0.0)
 
         details = []
-        details.append(f"Spot Price: {prev_spot:.2f} -> {curr_spot:.2f} ({spot_change:+.2f} pts, {spot_change_pct:+.2f}%)")
-        details.append(f"PCR (OI): {prev_pcr:.3f} -> {curr_pcr:.3f} ({pcr_delta:+.3f})")
-        details.append(f"Max Pain: {prev_pain:.0f} -> {curr_pain:.0f} ({pain_shift:+.0f} pts)")
-        details.append(f"Key Range: Support {curr_s1:.0f} (was {prev_s1:.0f}) | Resistance {curr_r1:.0f} (was {prev_r1:.0f})")
+        details.append(f"Spot Close: {prev_spot:,.2f} -> {curr_spot:,.2f} ({spot_change:+.2f} pts, {spot_change_pct:+.2f}%)")
+        details.append(f"Actionable ATM PCR: {prev_pcr:.2f} -> {curr_pcr:.2f} ({pcr_delta:+.2f})")
+        details.append(f"Max Pain Drift: {prev_pain:,.0f} -> {curr_pain:,.0f} ({pain_shift:+.0f} pts)")
+        details.append(f"Range Migration: Support {curr_s1:,.0f} (prev: {prev_s1:,.0f}) | Resistance {curr_r1:,.0f} (prev: {prev_r1:,.0f})")
 
         # Determine Shift
         shift_status = "CONTINUATION"
@@ -359,25 +361,25 @@ class OIAnalyzer:
 
         if "BEARISH" in prev_verdict and "BULLISH" in curr_verdict:
             shift_status = "BULLISH_REVERSAL"
-            headline = "⚡ MARKET DIRECTION SHIFT DETECTED: Bearish phase flipped to Bullish bias!"
+            headline = "⚡ MARKET DIRECTION SHIFT DETECTED: Bearish phase flipped to Bullish accumulation!"
         elif "BULLISH" in prev_verdict and "BEARISH" in curr_verdict:
             shift_status = "BEARISH_REVERSAL"
-            headline = "⚠️ MARKET DIRECTION SHIFT DETECTED: Bullish momentum rejected into Bearish pressure!"
-        elif "NEUTRAL" in prev_verdict and "BULLISH" in curr_verdict:
+            headline = "⚠️ MARKET DIRECTION SHIFT DETECTED: Bull run rejected into Bearish distribution!"
+        elif "CONSOLIDATION" in prev_verdict and "BULLISH" in curr_verdict:
             shift_status = "BULLISH_BREAKOUT"
-            headline = "🚀 BREAKOUT SHIFT: Consolidation resolved into Bullish trend!"
-        elif "NEUTRAL" in prev_verdict and "BEARISH" in curr_verdict:
+            headline = "🚀 BREAKOUT EXPANSION: Rangebound trading resolved into Bullish expansion!"
+        elif "CONSOLIDATION" in prev_verdict and "BEARISH" in curr_verdict:
             shift_status = "BEARISH_BREAKDOWN"
-            headline = "🔻 BREAKDOWN SHIFT: Rangebound trading surrendered to Bearish breakdown!"
+            headline = "🔻 BREAKDOWN EXPANSION: Support gave way to aggressive Bearish selling!"
         elif "BULLISH" in curr_verdict and spot_change >= 0:
             shift_status = "BULL_CONTINUATION"
-            headline = "🟢 Bull Phase Continues: Put writers defending higher strikes with persistent demand."
+            headline = "🟢 Bull Phase Continues: Put writers stepping up to higher strikes."
         elif "BEARISH" in curr_verdict and spot_change <= 0:
             shift_status = "BEAR_CONTINUATION"
-            headline = "🔴 Bear Phase Continues: Persistent Call writing capping any recovery attempts."
+            headline = "🔴 Bear Phase Continues: Persistent Call additions capping rallies."
         else:
-            shift_status = "CONSOLIDATION"
-            headline = "⚖️ Market in Consolidation: Balanced participation without clear structural shift."
+            shift_status = "RANGEBOUND_CONSOLIDATION"
+            headline = "⚖️ Neutral Consolidation: Option writers pinning price inside S1-R1 corridor."
 
         return {
             "has_previous_data": True,

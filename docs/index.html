@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NIFTY EOD OI Analysis Dashboard</title>
+    <title>NIFTY EOD Smart Money OI Intelligence</title>
     <style>
         :root {
             --bg: #0b0f19;
@@ -38,7 +38,7 @@
         .meta { color: var(--text-muted); font-size: 14px; margin-top: 4px; }
         .banner {
             background: linear-gradient(135deg, rgba(31, 41, 55, 0.9), rgba(17, 24, 39, 0.9));
-            border-left: 4px solid #fbbf24;
+            border-left: 4px solid #f59e0b;
             border-radius: 8px;
             padding: 16px 20px;
             margin-bottom: 24px;
@@ -58,7 +58,7 @@
             padding: 18px;
         }
         .card-label { font-size: 12px; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.05em; }
-        .card-value { font-size: 26px; font-weight: 700; margin-top: 6px; }
+        .card-value { font-size: 24px; font-weight: 700; margin-top: 6px; }
         .badge {
             display: inline-block;
             padding: 4px 10px;
@@ -66,9 +66,30 @@
             font-size: 12px;
             font-weight: 600;
         }
-        .badge-verdict { background: #fbbf24; color: #000; }
+        .badge-verdict { background: #f59e0b; color: #000; }
         .badge-atm { background: var(--accent); color: #000; margin-left: 6px; }
         .badge-subtle { background: var(--surface-elevated); color: var(--text-muted); font-size: 11px; }
+        .playbook-box {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 24px;
+        }
+        .playbook-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-top: 14px;
+        }
+        .trigger-card {
+            background: var(--surface-elevated);
+            border-radius: 8px;
+            padding: 14px;
+            border-left: 4px solid var(--border);
+        }
+        .trigger-bull { border-left-color: var(--success); }
+        .trigger-bear { border-left-color: var(--danger); }
         .chart-box {
             background: var(--surface);
             border: 1px solid var(--border);
@@ -102,17 +123,20 @@
             padding-top: 20px;
             border-top: 1px solid var(--border);
         }
+        @media (max-width: 768px) {
+            .playbook-grid { grid-template-columns: 1fr; }
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
             <div>
-                <h1>📈 NIFTY EOD OI & Market Direction Dashboard</h1>
-                <div class="meta">NSE Official API &bull; Weekly Expiry: 29-Sep-2026 &bull; Timestamp: 29-Sep-2026 15:40:00</div>
+                <h1>🧠 NIFTY EOD Smart Money OI Intelligence</h1>
+                <div class="meta">NSE Official v3 API &bull; Weekly Expiry: 29-Sep-2026 &bull; Close: 29-Sep-2026 15:40:00</div>
             </div>
             <div>
-                <span class="badge badge-verdict">NEUTRAL RANGEBOUND</span>
+                <span class="badge badge-verdict">RANGEBOUND CONSOLIDATION</span>
             </div>
         </header>
 
@@ -130,26 +154,41 @@
                 <div class="card-value" style="color: var(--warning);">22,750</div>
             </div>
             <div class="card">
-                <div class="card-label">Overall PCR (OI)</div>
-                <div class="card-value" style="color: var(--danger);">0.88</div>
+                <div class="card-label">Actionable ATM PCR (±10)</div>
+                <div class="card-value" style="color: var(--success);">1.13</div>
             </div>
             <div class="card">
-                <div class="card-label">Change in OI PCR</div>
-                <div class="card-value" style="color: var(--danger);">-0.09</div>
+                <div class="card-label">ATM Chg PCR (Intraday)</div>
+                <div class="card-value" style="color: var(--danger);">-1.77</div>
             </div>
             <div class="card">
-                <div class="card-label">Key Range (S1 - R1)</div>
-                <div class="card-value" style="font-size: 19px;">22,700 - 22,700</div>
+                <div class="card-label">Expected Expiry Band</div>
+                <div class="card-value" style="font-size: 18px;">22,684 - 22,716</div>
+            </div>
+        </div>
+
+        <div class="playbook-box">
+            <h3>🎯 Tactical Playbook & Trade Setups for Next Session</h3>
+            <p style="margin-top: 6px; color: var(--text-muted); font-size: 14px;">Active battleground (ATM ±10) shows an actionable PCR of 1.13 (Chg PCR: -1.77). The primary ceiling is locked at 22,700 (Highest Call OI), while the major institutional floor sits at 22,700 (Highest Put OI). ATM straddle indicates an expected expiration boundary between 22,684 and 22,716.</p>
+            <div class="playbook-grid">
+                <div class="trigger-card trigger-bull">
+                    <div style="font-size: 11px; text-transform: uppercase; color: var(--success); font-weight: 700;">🟢 Bullish Confirmation Trigger</div>
+                    <div style="margin-top: 6px; font-weight: 600;">Break & 15-min sustain above 22,700 -> Triggers Call short covering towards 22,800</div>
+                </div>
+                <div class="trigger-card trigger-bear">
+                    <div style="font-size: 11px; text-transform: uppercase; color: var(--danger); font-weight: 700;">🔴 Bearish Breakdown Trigger</div>
+                    <div style="margin-top: 6px; font-weight: 600;">Break & 15-min sustain below 22,700 -> Triggers Put writer panic unwinding towards 22,600</div>
+                </div>
             </div>
         </div>
 
         <div class="chart-box">
-            <h3 style="margin-bottom: 16px; text-align: left;">📊 Open Interest & Build-up Analytics</h3>
-            <img src="latest_oi_chart.png" alt="Open Interest Distribution Chart">
+            <h3 style="margin-bottom: 16px; text-align: left;">📊 Executive Market Intelligence Card</h3>
+            <img src="latest_oi_chart.png" alt="EOD OI Intelligence Card">
         </div>
 
         <div class="card" style="margin-bottom: 24px; overflow-x: auto;">
-            <h3 style="margin-bottom: 16px;">🎯 Strike-by-Strike Buildup (ATM Window)</h3>
+            <h3 style="margin-bottom: 16px;">🎯 Strike-by-Strike Buildup (Actionable ATM Battleground)</h3>
             <table>
                 <thead>
                     <tr>
@@ -345,7 +384,7 @@
                     <tr>
                         <th>Date</th>
                         <th>Spot Close</th>
-                        <th>PCR (OI)</th>
+                        <th>ATM PCR</th>
                         <th>Max Pain</th>
                         <th>Range (S1 - R1)</th>
                         <th>Verdict</th>
@@ -359,7 +398,7 @@
                 <td>0.88</td>
                 <td>22,750</td>
                 <td>22,700 - 22,700</td>
-                <td><span class="badge badge-subtle">NEUTRAL_RANGEBOUND</span></td>
+                <td><span class="badge badge-subtle">N/A</span></td>
             </tr>
             
                 </tbody>

@@ -70,7 +70,7 @@ API_HEADERS = {
 }
 
 # Analysis Settings
-ATM_STRIKE_WINDOW = 12  # Strikes above and below ATM
+ATM_STRIKE_WINDOW = 10  # Active battleground: ATM ± 10 strikes (filters out far OTM hedge skew)
 REQUEST_TIMEOUT = 18
 MAX_RETRIES = 3
 RETRY_DELAY = 2.5

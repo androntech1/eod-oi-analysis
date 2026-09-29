@@ -6,83 +6,87 @@ from datetime import datetime
 from .config import REPORTS_DIR, DOCS_DIR
 
 class OIReporter:
-    """Generates Markdown reports, interactive HTML GitHub Pages dashboard, and CLI summaries."""
+    """Generates deep institutional Markdown reports, interactive HTML dashboards, and CLI summaries."""
 
     def __init__(self):
         self.reports_dir = REPORTS_DIR
         self.docs_dir = DOCS_DIR
 
     def generate_markdown_report(self, analysis_result: Dict[str, Any], date_str: str) -> Path:
-        """Generate comprehensive GitHub-flavored Markdown report."""
+        """Generate comprehensive GitHub-flavored Markdown report with actionable intelligence."""
         weekly = analysis_result.get("weekly_analysis", {})
         monthly = analysis_result.get("monthly_analysis", {})
         shift = analysis_result.get("market_shift", {})
+        playbook = weekly.get("playbook", {})
 
         symbol = weekly.get("symbol", "NIFTY")
         spot = weekly.get("underlying_price", 0.0)
         max_pain = weekly.get("max_pain", 0.0)
-        pcr = weekly.get("totals", {}).get("pcr_oi", 1.0)
-        pcr_chg = weekly.get("totals", {}).get("pcr_chg_oi", 1.0)
-        verdict = weekly.get("sentiment", {}).get("verdict", "NEUTRAL")
+        totals = weekly.get("totals", {})
+        atm_pcr = totals.get("atm_pcr_oi", 1.0)
+        atm_pcr_chg = totals.get("atm_pcr_chg_oi", 1.0)
+        tot_pcr = totals.get("pcr_oi", 1.0)
+        regime = playbook.get("regime", "NEUTRAL").replace("_", " ")
         sr = weekly.get("sr_levels", {})
 
         md = []
-        md.append(f"# 📊 {symbol} EOD Open Interest & Directional Shift Analysis")
-        md.append(f"**Date:** `{date_str}` | **Market Timestamp:** `{weekly.get('timestamp')}` | **Weekly Expiry:** `{weekly.get('expiry')}` | **Monthly Expiry:** `{monthly.get('expiry')}`\n")
+        md.append(f"# 🧠 {symbol} EOD Smart Money & Directional Shift Intelligence")
+        md.append(f"**Date:** `{date_str}` | **Market Close:** `{weekly.get('timestamp')}` | **Weekly Expiry:** `{weekly.get('expiry')}` | **Monthly Expiry:** `{monthly.get('expiry')}`\n")
 
-        # Directional Shift Banner
+        # Actionable Shift Banner
         shift_headline = shift.get("headline", "Market Analysis Active")
         md.append(f"> ### {shift_headline}\n")
 
-        # Metric summary cards in table
-        md.append("| Metric | Value | Interpretation |")
-        md.append("| :--- | :--- | :--- |")
-        md.append(f"| **Spot Price** | **`{spot:,.2f}`** | Underlying index closing level |")
-        md.append(f"| **Max Pain** | **`{max_pain:,.0f}`** | Strike where option writers incur minimum aggregate loss |")
-        md.append(f"| **Overall PCR (OI)** | **`{pcr:.2f}`** | {'> 1.2 Bullish' if pcr >= 1.2 else ('< 0.8 Bearish' if pcr <= 0.8 else 'Neutral balance')} |")
-        md.append(f"| **Change in OI PCR** | **`{pcr_chg:.2f}`** | {'> 1.2 Fresh Put writing dominance' if pcr_chg >= 1.2 else ('< 0.8 Fresh Call writing dominance' if pcr_chg <= 0.8 else 'Balanced intraday additions')} |")
-        md.append(f"| **Market Bias** | **`{verdict}`** | Weekly composite bias |")
-        md.append(f"| **Support Levels** | **S1: `{sr.get('support_1'):,.0f}`** / S2: `{sr.get('support_2'):,.0f}` | Major Put concentration floors |")
-        md.append(f"| **Resistance Levels** | **R1: `{sr.get('resistance_1'):,.0f}`** / R2: `{sr.get('resistance_2'):,.0f}` | Major Call concentration ceilings |\n")
+        # Visual Intelligence Card
+        md.append("## 📈 Executive Intelligence Card")
+        md.append("![EOD Smart Money OI Intelligence Card](latest_oi_chart.png)\n")
 
-        # Embedded Visual Chart
-        md.append("## 📈 Visual Open Interest Distribution")
-        md.append("![EOD OI Analysis Chart](latest_oi_chart.png)\n")
+        # Institutional Playbook
+        md.append("## 🎯 Institutional Playbook & Action Plan for Next Session")
+        md.append(f"**Market Regime:** `{regime}` — *{playbook.get('regime_desc', '')}*\n")
+        md.append("| Tactical Component | Strategy & Trade Trigger |")
+        md.append("| :--- | :--- |")
+        md.append(f"| 🟢 **Bullish Trigger** | **{playbook.get('bullish_trigger')}** |")
+        md.append(f"| 🔴 **Bearish Trigger** | **{playbook.get('bearish_trigger')}** |")
+        md.append(f"| ⚖️ **Straddle Corridor** | **{playbook.get('range_play')}** |")
+        md.append(f"| 🎯 **Expected Expiry Band** | **`{playbook.get('expected_range')}`** (ATM Straddle: `{weekly.get('atm_straddle', {}).get('premium', 0):.1f}` pts) |")
+        md.append(f"| 🛡️ **Major Support Floor (S1)** | **`{sr.get('support_1'):,.0f}`** (Highest Put OI concentration) |")
+        md.append(f"| 🧱 **Major Resistance Wall (R1)** | **`{sr.get('resistance_1'):,.0f}`** (Highest Call OI concentration) |\n")
 
-        # Signals Breakdown
-        signals = weekly.get("sentiment", {}).get("signals", [])
-        if signals:
-            md.append("### 🔍 Derivative Signals Detected")
-            for s in signals:
-                md.append(f"- {s}")
-            md.append("")
+        # Trapped Writers & Positioning Analysis
+        md.append("### ⚡ Trapped Writers & Smart Money Footprint")
+        for line in playbook.get("trapped_writers", []):
+            md.append(f"- **Risk Alert:** {line}")
+        md.append(f"- **Actionable ATM Battleground PCR (ATM ±10):** `{atm_pcr:.2f}` *(Unpolluted by far OTM hedge skew)*")
+        md.append(f"- **Intraday Additions PCR (ATM ±10):** `{atm_pcr_chg:.2f}` *(Where fresh margin was deployed today)*")
+        md.append(f"- **Full Chain PCR:** `{tot_pcr:.2f}` *(Included for reference; contains far OTM wing hedges)*\n")
 
         # Day-over-Day Shift Metrics
         if shift.get("has_previous_data"):
-            md.append("### 🔄 Day-over-Day Comparison")
+            md.append("### 🔄 Day-over-Day Migration")
             for d in shift.get("details", []):
                 md.append(f"- {d}")
             md.append("")
 
         # Weekly vs Monthly Perspective
-        m_pcr = monthly.get("totals", {}).get("pcr_oi", 1.0)
-        m_verdict = monthly.get("sentiment", {}).get("verdict", "NEUTRAL")
-        md.append("### 🗓️ Weekly vs Monthly Alignment")
-        md.append(f"- **Weekly View ({weekly.get('expiry')}):** `{verdict}` (PCR: `{pcr:.2f}`)")
-        md.append(f"- **Monthly View ({monthly.get('expiry')}):** `{m_verdict}` (PCR: `{m_pcr:.2f}`)")
-        if verdict == m_verdict:
-            md.append(f"- **Alignment:** Weekly and Monthly trends are **congruent ({verdict})**, strengthening high-conviction follow-through.")
+        m_pcr = monthly.get("totals", {}).get("atm_pcr_oi", monthly.get("totals", {}).get("pcr_oi", 1.0))
+        m_regime = monthly.get("playbook", {}).get("regime", monthly.get("sentiment", {}).get("verdict", "NEUTRAL")).replace("_", " ")
+        md.append("### 🗓️ Tactical Weekly vs Structural Monthly Alignment")
+        md.append(f"- **Weekly Tactical View ({weekly.get('expiry')}):** `{regime}` (ATM PCR: `{atm_pcr:.2f}`)")
+        md.append(f"- **Monthly Structural View ({monthly.get('expiry')}):** `{m_regime}` (ATM PCR: `{m_pcr:.2f}`)")
+        if regime == m_regime:
+            md.append(f"- **Alignment:** Weekly and Monthly trends are **congruent ({regime})**, reinforcing trend durability.")
         else:
-            md.append(f"- **Alignment:** **Divergence detected** between weekly tactical sentiment (`{verdict}`) and monthly structural trend (`{m_verdict}`). Caution warranted near key inflection points.")
+            md.append(f"- **Alignment:** **Tactical divergence detected** between weekly momentum (`{regime}`) and monthly backdrop (`{m_regime}`). Anticipate chop at S1/R1 boundaries.")
         md.append("")
 
         # Strike Table (ATM ± 8 strikes)
         atm_strike = weekly.get("atm_strike", spot)
         atm_window = weekly.get("atm_window_strikes", [])
-        focused_strikes = [s for s in atm_window if abs(s["strikePrice"] - atm_strike) <= (8 * weekly.get("strike_step", 50))]
+        focused_strikes = [s for s in atm_window if abs(s["strikePrice"] - atm_strike) <= (8 * 50)]
         focused_strikes.sort(key=lambda x: x["strikePrice"])
 
-        md.append("### 🎯 Strike-by-Strike Buildup Table (ATM Focus)")
+        md.append("### 🎯 Strike Buildup Heatmap (ATM ± 8 Strikes)")
         md.append("| Call OI (L) | Call Chg (L) | Call Buildup | Strike | Put Buildup | Put Chg (L) | Put OI (L) |")
         md.append("| :---: | :---: | :---: | :---: | :---: | :---: | :---: |")
         for s in focused_strikes:
@@ -116,16 +120,17 @@ class OIReporter:
         weekly = analysis_result.get("weekly_analysis", {})
         monthly = analysis_result.get("monthly_analysis", {})
         shift = analysis_result.get("market_shift", {})
+        playbook = weekly.get("playbook", {})
 
         symbol = weekly.get("symbol", "NIFTY")
         spot = weekly.get("underlying_price", 0.0)
         max_pain = weekly.get("max_pain", 0.0)
-        pcr = weekly.get("totals", {}).get("pcr_oi", 1.0)
-        pcr_chg = weekly.get("totals", {}).get("pcr_chg_oi", 1.0)
-        verdict = weekly.get("sentiment", {}).get("verdict", "NEUTRAL").replace("_", " ")
-        badge_color = weekly.get("sentiment", {}).get("badge_color", "#fbbf24")
-        shift_status = shift.get("shift_status", "ACTIVE")
-        shift_headline = shift.get("headline", "Market direction analysis ready")
+        totals = weekly.get("totals", {})
+        atm_pcr = totals.get("atm_pcr_oi", 1.0)
+        atm_pcr_chg = totals.get("atm_pcr_chg_oi", 1.0)
+        regime = playbook.get("regime", "NEUTRAL").replace("_", " ")
+        badge_color = playbook.get("color", "#f59e0b")
+        shift_headline = shift.get("headline", "Market direction analysis active")
         sr = weekly.get("sr_levels", {})
 
         atm_strike = weekly.get("atm_strike", spot)
@@ -178,7 +183,7 @@ class OIReporter:
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{symbol} EOD OI Analysis Dashboard</title>
+    <title>{symbol} EOD Smart Money OI Intelligence</title>
     <style>
         :root {{
             --bg: #0b0f19;
@@ -233,7 +238,7 @@ class OIReporter:
             padding: 18px;
         }}
         .card-label {{ font-size: 12px; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.05em; }}
-        .card-value {{ font-size: 26px; font-weight: 700; margin-top: 6px; }}
+        .card-value {{ font-size: 24px; font-weight: 700; margin-top: 6px; }}
         .badge {{
             display: inline-block;
             padding: 4px 10px;
@@ -244,6 +249,27 @@ class OIReporter:
         .badge-verdict {{ background: {badge_color}; color: #000; }}
         .badge-atm {{ background: var(--accent); color: #000; margin-left: 6px; }}
         .badge-subtle {{ background: var(--surface-elevated); color: var(--text-muted); font-size: 11px; }}
+        .playbook-box {{
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 24px;
+        }}
+        .playbook-grid {{
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-top: 14px;
+        }}
+        .trigger-card {{
+            background: var(--surface-elevated);
+            border-radius: 8px;
+            padding: 14px;
+            border-left: 4px solid var(--border);
+        }}
+        .trigger-bull {{ border-left-color: var(--success); }}
+        .trigger-bear {{ border-left-color: var(--danger); }}
         .chart-box {{
             background: var(--surface);
             border: 1px solid var(--border);
@@ -277,17 +303,20 @@ class OIReporter:
             padding-top: 20px;
             border-top: 1px solid var(--border);
         }}
+        @media (max-width: 768px) {{
+            .playbook-grid {{ grid-template-columns: 1fr; }}
+        }}
     </style>
 </head>
 <body>
     <div class="container">
         <header>
             <div>
-                <h1>📈 {symbol} EOD OI & Market Direction Dashboard</h1>
-                <div class="meta">NSE Official API &bull; Weekly Expiry: {weekly.get('expiry')} &bull; Timestamp: {weekly.get('timestamp')}</div>
+                <h1>🧠 {symbol} EOD Smart Money OI Intelligence</h1>
+                <div class="meta">NSE Official v3 API &bull; Weekly Expiry: {weekly.get('expiry')} &bull; Close: {weekly.get('timestamp')}</div>
             </div>
             <div>
-                <span class="badge badge-verdict">{verdict}</span>
+                <span class="badge badge-verdict">{regime}</span>
             </div>
         </header>
 
@@ -305,26 +334,41 @@ class OIReporter:
                 <div class="card-value" style="color: var(--warning);">{max_pain:,.0f}</div>
             </div>
             <div class="card">
-                <div class="card-label">Overall PCR (OI)</div>
-                <div class="card-value" style="color: {'var(--success)' if pcr >= 1.0 else 'var(--danger)'};">{pcr:.2f}</div>
+                <div class="card-label">Actionable ATM PCR (±10)</div>
+                <div class="card-value" style="color: {'var(--success)' if atm_pcr >= 1.0 else 'var(--danger)'};">{atm_pcr:.2f}</div>
             </div>
             <div class="card">
-                <div class="card-label">Change in OI PCR</div>
-                <div class="card-value" style="color: {'var(--success)' if pcr_chg >= 1.0 else 'var(--danger)'};">{pcr_chg:.2f}</div>
+                <div class="card-label">ATM Chg PCR (Intraday)</div>
+                <div class="card-value" style="color: {'var(--success)' if atm_pcr_chg >= 1.0 else 'var(--danger)'};">{atm_pcr_chg:.2f}</div>
             </div>
             <div class="card">
-                <div class="card-label">Key Range (S1 - R1)</div>
-                <div class="card-value" style="font-size: 19px;">{sr.get('support_1', 0):,.0f} - {sr.get('resistance_1', 0):,.0f}</div>
+                <div class="card-label">Expected Expiry Band</div>
+                <div class="card-value" style="font-size: 18px;">{playbook.get('expected_range', 'N/A')}</div>
+            </div>
+        </div>
+
+        <div class="playbook-box">
+            <h3>🎯 Tactical Playbook & Trade Setups for Next Session</h3>
+            <p style="margin-top: 6px; color: var(--text-muted); font-size: 14px;">{playbook.get('smart_money_verdict', '')}</p>
+            <div class="playbook-grid">
+                <div class="trigger-card trigger-bull">
+                    <div style="font-size: 11px; text-transform: uppercase; color: var(--success); font-weight: 700;">🟢 Bullish Confirmation Trigger</div>
+                    <div style="margin-top: 6px; font-weight: 600;">{playbook.get('bullish_trigger', '')}</div>
+                </div>
+                <div class="trigger-card trigger-bear">
+                    <div style="font-size: 11px; text-transform: uppercase; color: var(--danger); font-weight: 700;">🔴 Bearish Breakdown Trigger</div>
+                    <div style="margin-top: 6px; font-weight: 600;">{playbook.get('bearish_trigger', '')}</div>
+                </div>
             </div>
         </div>
 
         <div class="chart-box">
-            <h3 style="margin-bottom: 16px; text-align: left;">📊 Open Interest & Build-up Analytics</h3>
-            <img src="latest_oi_chart.png" alt="Open Interest Distribution Chart">
+            <h3 style="margin-bottom: 16px; text-align: left;">📊 Executive Market Intelligence Card</h3>
+            <img src="latest_oi_chart.png" alt="EOD OI Intelligence Card">
         </div>
 
         <div class="card" style="margin-bottom: 24px; overflow-x: auto;">
-            <h3 style="margin-bottom: 16px;">🎯 Strike-by-Strike Buildup (ATM Window)</h3>
+            <h3 style="margin-bottom: 16px;">🎯 Strike-by-Strike Buildup (Actionable ATM Battleground)</h3>
             <table>
                 <thead>
                     <tr>
@@ -350,7 +394,7 @@ class OIReporter:
                     <tr>
                         <th>Date</th>
                         <th>Spot Close</th>
-                        <th>PCR (OI)</th>
+                        <th>ATM PCR</th>
                         <th>Max Pain</th>
                         <th>Range (S1 - R1)</th>
                         <th>Verdict</th>
@@ -380,25 +424,27 @@ class OIReporter:
         weekly = analysis_result.get("weekly_analysis", {})
         monthly = analysis_result.get("monthly_analysis", {})
         shift = analysis_result.get("market_shift", {})
+        playbook = weekly.get("playbook", {})
 
         spot = weekly.get("underlying_price", 0.0)
         max_pain = weekly.get("max_pain", 0.0)
-        pcr = weekly.get("totals", {}).get("pcr_oi", 1.0)
-        pcr_chg = weekly.get("totals", {}).get("pcr_chg_oi", 1.0)
-        verdict = weekly.get("sentiment", {}).get("verdict", "NEUTRAL")
+        totals = weekly.get("totals", {})
+        atm_pcr = totals.get("atm_pcr_oi", 1.0)
+        atm_pcr_chg = totals.get("atm_pcr_chg_oi", 1.0)
+        regime = playbook.get("regime", "NEUTRAL")
         sr = weekly.get("sr_levels", {})
 
-        print("\n" + "="*68)
-        print(f"  {weekly.get('symbol')} EOD OPEN INTEREST & SHIFT ANALYSIS")
-        print("="*68)
-        print(f"  Market Timestamp : {weekly.get('timestamp')}")
-        print(f"  Spot Price       : {spot:,.2f}")
-        print(f"  Max Pain         : {max_pain:,.0f}")
-        print(f"  PCR (Total OI)   : {pcr:.2f}")
-        print(f"  PCR (Change OI)  : {pcr_chg:.2f}")
-        print(f"  Support (S1/S2)  : {sr.get('support_1'):,.0f} / {sr.get('support_2'):,.0f}")
-        print(f"  Resistance(R1/R2): {sr.get('resistance_1'):,.0f} / {sr.get('resistance_2'):,.0f}")
-        print(f"  Weekly Verdict   : {verdict}")
-        print(f"  Monthly Verdict  : {monthly.get('sentiment', {}).get('verdict')}")
-        print(f"  Direction Shift  : {shift.get('headline')}")
-        print("="*68 + "\n")
+        print("\n" + "="*72)
+        print(f"  {weekly.get('symbol')} EOD SMART MONEY & SHIFT INTELLIGENCE")
+        print("="*72)
+        print(f"  Market Close       : {weekly.get('timestamp')}")
+        print(f"  Spot Price         : {spot:,.2f}")
+        print(f"  Max Pain Strike    : {max_pain:,.0f}")
+        print(f"  Actionable ATM PCR : {atm_pcr:.2f} (Chg PCR: {atm_pcr_chg:.2f})")
+        print(f"  Expected Expiry Band: {playbook.get('expected_range')}")
+        print(f"  Major Support (S1) : {sr.get('support_1'):,.0f} (Highest Put OI Wall)")
+        print(f"  Major Resistance(R1): {sr.get('resistance_1'):,.0f} (Highest Call OI Wall)")
+        print(f"  Tactical Regime    : {regime}")
+        print(f"  [+] Bull Trigger   : {playbook.get('bullish_trigger')}")
+        print(f"  [-] Bear Trigger   : {playbook.get('bearish_trigger')}")
+        print("="*72 + "\n")

@@ -52,19 +52,18 @@ class StorageManager:
             "underlying_price": weekly_summary.get("underlying_price"),
             "weekly_expiry": weekly_summary.get("expiry"),
             "monthly_expiry": monthly_summary.get("expiry"),
+            "atm_pcr_oi": weekly_summary.get("totals", {}).get("atm_pcr_oi"),
+            "atm_pcr_chg_oi": weekly_summary.get("totals", {}).get("atm_pcr_chg_oi"),
             "weekly_pcr_oi": weekly_summary.get("totals", {}).get("pcr_oi"),
-            "weekly_pcr_chg_oi": weekly_summary.get("totals", {}).get("pcr_chg_oi"),
             "weekly_max_pain": weekly_summary.get("max_pain"),
-            "weekly_sentiment": weekly_summary.get("sentiment", {}).get("verdict"),
+            "weekly_regime": weekly_summary.get("playbook", {}).get("regime"),
             "weekly_resistance_1": weekly_summary.get("sr_levels", {}).get("resistance_1"),
             "weekly_support_1": weekly_summary.get("sr_levels", {}).get("support_1"),
-            "monthly_pcr_oi": monthly_summary.get("totals", {}).get("pcr_oi"),
-            "monthly_sentiment": monthly_summary.get("sentiment", {}).get("verdict"),
+            "monthly_pcr_oi": monthly_summary.get("totals", {}).get("atm_pcr_oi"),
             "market_verdict": analysis_result.get("market_shift", {}).get("shift_status")
         }
 
         symbol_history.append(compact_entry)
-        # Sort by date
         symbol_history.sort(key=lambda x: x["date"])
         history[symbol] = symbol_history
         self._save_history(history)
@@ -79,7 +78,6 @@ class StorageManager:
         if not prior_entries:
             return None
 
-        # Return the most recent past entry
         latest_past_date = prior_entries[-1]["date"]
         past_file = self.snapshot_dir / f"{latest_past_date}_{symbol}.json"
         if past_file.exists():

@@ -43,12 +43,14 @@ Runs automatically every trading day at **16:00 IST** via GitHub Actions, publis
 ## 🌐 Multiple Repositories on GitHub Pages
 
 > **Yes! You can have multiple GitHub Pages across different repositories.**
+>
 > - Your user site resides at: `https://<username>.github.io`
 > - This project's dashboard resides at: `https://<username>.github.io/eod-oi-analysis/`
 >
 > They operate completely independently and do not conflict.
 >
 > **To enable GitHub Pages for this repo:**
+>
 > 1. Go to repository **Settings** -> **Pages**.
 > 2. Under **Build and deployment** -> **Source**, select **GitHub Actions**.
 > 3. The included workflow will automatically build and deploy `docs/` on every run.
@@ -137,14 +139,14 @@ eod-oi-analysis/
 
 ## ⚖️ Derivative Methodology & Cheat Sheet
 
-| Metric | Bullish Condition | Bearish Condition | Neutral / Warning |
-| :--- | :--- | :--- | :--- |
-| **PCR (OI)** | $> 1.20$ | $< 0.80$ | $0.80 - 1.20$ |
-| **PCR (Chg OI)** | $> 1.30$ (Aggressive Put writing) | $< 0.75$ (Aggressive Call writing) | $0.75 - 1.30$ |
-| **Spot vs Max Pain** | Spot $> \text{Max Pain} + 75$ | Spot $< \text{Max Pain} - 75$ | Spot $\approx \text{Max Pain}$ |
-| **Call Buildup** | Short Covering (Price $\uparrow$, OI $\downarrow$) | Short Buildup (Price $\downarrow$, OI $\uparrow$) | Long Unwinding |
-| **Put Buildup** | Put Writing (Price $\downarrow$, OI $\uparrow$) | Put Buying (Price $\uparrow$, OI $\uparrow$) | Put Long Unwinding |
-| **Shift Verdict** | Support migrating higher, PCR $\uparrow$ | Resistance migrating lower, PCR $\downarrow$ | Sideways Rangebound |
+| Metric               | Bullish Condition                                  | Bearish Condition                                 | Neutral / Warning              |
+| :------------------- | :------------------------------------------------- | :------------------------------------------------ | :----------------------------- |
+| **PCR (OI)**         | $> 1.20$                                           | $< 0.80$                                          | $0.80 - 1.20$                  |
+| **PCR (Chg OI)**     | $> 1.30$ (Aggressive Put writing)                  | $< 0.75$ (Aggressive Call writing)                | $0.75 - 1.30$                  |
+| **Spot vs Max Pain** | Spot $> \text{Max Pain} + 75$                      | Spot $< \text{Max Pain} - 75$                     | Spot $\approx \text{Max Pain}$ |
+| **Call Buildup**     | Short Covering (Price $\uparrow$, OI $\downarrow$) | Short Buildup (Price $\downarrow$, OI $\uparrow$) | Long Unwinding                 |
+| **Put Buildup**      | Put Writing (Price $\downarrow$, OI $\uparrow$)    | Put Buying (Price $\uparrow$, OI $\uparrow$)      | Put Long Unwinding             |
+| **Shift Verdict**    | Support migrating higher, PCR $\uparrow$           | Resistance migrating lower, PCR $\downarrow$      | Sideways Rangebound            |
 
 ---
 

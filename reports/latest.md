@@ -1,34 +1,35 @@
-# 📊 NIFTY EOD Open Interest & Directional Shift Analysis
-**Date:** `2026-09-29` | **Market Timestamp:** `29-Sep-2026 15:40:00` | **Weekly Expiry:** `29-Sep-2026` | **Monthly Expiry:** `29-Sep-2026`
+# 🧠 NIFTY EOD Smart Money & Directional Shift Intelligence
+**Date:** `2026-09-29` | **Market Close:** `29-Sep-2026 15:40:00` | **Weekly Expiry:** `29-Sep-2026` | **Monthly Expiry:** `29-Sep-2026`
 
 > ### Baseline snapshot established. Day-over-day shift comparison available from next trading session.
 
-| Metric | Value | Interpretation |
-| :--- | :--- | :--- |
-| **Spot Price** | **`22,716.20`** | Underlying index closing level |
-| **Max Pain** | **`22,750`** | Strike where option writers incur minimum aggregate loss |
-| **Overall PCR (OI)** | **`0.88`** | Neutral balance |
-| **Change in OI PCR** | **`-0.09`** | < 0.8 Fresh Call writing dominance |
-| **Market Bias** | **`NEUTRAL_RANGEBOUND`** | Weekly composite bias |
-| **Support Levels** | **S1: `22,700`** \| S2: `22,600` | Major Put concentration floors |
-| **Resistance Levels** | **R1: `22,700`** \| R2: `23,500` | Major Call concentration ceilings |
+## 📈 Executive Intelligence Card
+![EOD Smart Money OI Intelligence Card](latest_oi_chart.png)
 
-## 📈 Visual Open Interest Distribution
-![EOD OI Analysis Chart](latest_oi_chart.png)
+## 🎯 Institutional Playbook & Action Plan for Next Session
+**Market Regime:** `RANGEBOUND CONSOLIDATION` — *Balanced two-way writing. Market trapped inside S1-R1 strangle corridor.*
 
-### 🔍 Derivative Signals Detected
-- Sub-1 PCR (0.882): Mild bearish overhang
-- Aggressive fresh Put writing over Calls today (Strong intraday bull support)
-- ATM cluster shows dominant Call writing (Pressure near spot)
-- Call unwinding observed at strike 23000 (Shorts covering)
-- Put unwinding observed at strike 22800 (Longs/Puts giving up)
+| Tactical Component | Strategy & Trade Trigger |
+| :--- | :--- |
+| 🟢 **Bullish Trigger** | **Break & 15-min sustain above 22,700 -> Triggers Call short covering towards 22,800** |
+| 🔴 **Bearish Trigger** | **Break & 15-min sustain below 22,700 -> Triggers Put writer panic unwinding towards 22,600** |
+| ⚖️ **Straddle Corridor** | **Range corridor: 22,700 - 22,700 (Expect mean reversion within this band until breakout occurs)** |
+| 🎯 **Expected Expiry Band** | **`22,684 - 22,716`** (ATM Straddle: `16.3` pts) |
+| 🛡️ **Major Support Floor (S1)** | **`22,700`** (Highest Put OI concentration) |
+| 🧱 **Major Resistance Wall (R1)** | **`22,700`** (Highest Call OI concentration) |
 
-### 🗓️ Weekly vs Monthly Alignment
-- **Weekly View (29-Sep-2026):** `NEUTRAL_RANGEBOUND` (PCR: `0.88`)
-- **Monthly View (29-Sep-2026):** `NEUTRAL_RANGEBOUND` (PCR: `0.88`)
-- **Alignment:** Weekly and Monthly trends are **congruent (NEUTRAL_RANGEBOUND)**, strengthening high-conviction follow-through.
+### ⚡ Trapped Writers & Smart Money Footprint
+- **Risk Alert:** Call writers trapped at 22,700 (Spot is trading above fresh call addition). Short covering trigger active!
+- **Actionable ATM Battleground PCR (ATM ±10):** `1.13` *(Unpolluted by far OTM hedge skew)*
+- **Intraday Additions PCR (ATM ±10):** `-1.77` *(Where fresh margin was deployed today)*
+- **Full Chain PCR:** `0.88` *(Included for reference; contains far OTM wing hedges)*
 
-### 🎯 Strike-by-Strike Buildup Table (ATM Focus)
+### 🗓️ Tactical Weekly vs Structural Monthly Alignment
+- **Weekly Tactical View (29-Sep-2026):** `RANGEBOUND CONSOLIDATION` (ATM PCR: `1.13`)
+- **Monthly Structural View (29-Sep-2026):** `RANGEBOUND CONSOLIDATION` (ATM PCR: `1.13`)
+- **Alignment:** Weekly and Monthly trends are **congruent (RANGEBOUND CONSOLIDATION)**, reinforcing trend durability.
+
+### 🎯 Strike Buildup Heatmap (ATM ± 8 Strikes)
 | Call OI (L) | Call Chg (L) | Call Buildup | Strike | Put Buildup | Put Chg (L) | Put OI (L) |
 | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 | 0.02 | +0.02 | Short Buildup (Call Writing) | **22,300** | Put Writing (Support Creation) | +0.09 | 0.82 |

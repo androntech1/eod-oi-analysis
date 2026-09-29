@@ -6,14 +6,14 @@
       "underlying_price": 22716.2,
       "weekly_expiry": "29-Sep-2026",
       "monthly_expiry": "29-Sep-2026",
-      "weekly_pcr_oi": 0.882,
-      "weekly_pcr_chg_oi": -0.085,
+      "atm_pcr_oi": 1.13,
+      "atm_pcr_chg_oi": -1.77,
+      "weekly_pcr_oi": 0.88,
       "weekly_max_pain": 22750.0,
-      "weekly_sentiment": "NEUTRAL_RANGEBOUND",
+      "weekly_regime": "RANGEBOUND_CONSOLIDATION",
       "weekly_resistance_1": 22700.0,
       "weekly_support_1": 22700.0,
-      "monthly_pcr_oi": 0.882,
-      "monthly_sentiment": "NEUTRAL_RANGEBOUND",
+      "monthly_pcr_oi": 1.13,
       "market_verdict": "FIRST_RECORDED_SNAPSHOT"
     }
   ]

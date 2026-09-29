@@ -26,13 +26,13 @@ def test_pipeline():
     # Buildup verification
     assert analyzer._classify_buildup(10, 5000, is_call=True) == "Long Buildup"
     assert analyzer._classify_buildup(-10, 5000, is_call=True) == "Short Buildup (Call Writing)"
-    assert analyzer._classify_buildup(10, -5000, is_call=True) == "Short Covering (Bullish Push)"
+    assert analyzer._classify_buildup(10, -5000, is_call=True) == "Short Covering (Bullish Squeeze)"
 
     # 2. Test Directional Shift Detection
     prev_summary = {
         "underlying_price": 22600.0,
         "max_pain": 22600.0,
-        "totals": {"pcr_oi": 0.75, "pcr_chg_oi": 0.70},
+        "totals": {"atm_pcr_oi": 0.75, "atm_pcr_chg_oi": 0.70},
         "sentiment": {"verdict": "STRONG_BEARISH"},
         "sr_levels": {"resistance_1": 22700, "support_1": 22500}
     }
@@ -40,7 +40,7 @@ def test_pipeline():
     curr_summary = {
         "underlying_price": 22750.0,
         "max_pain": 22750.0,
-        "totals": {"pcr_oi": 1.25, "pcr_chg_oi": 1.40},
+        "totals": {"atm_pcr_oi": 1.25, "atm_pcr_chg_oi": 1.40},
         "sentiment": {"verdict": "STRONG_BULLISH"},
         "sr_levels": {"resistance_1": 22900, "support_1": 22700}
     }
