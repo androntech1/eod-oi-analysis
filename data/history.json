@@ -1,0 +1,20 @@
+{
+  "NIFTY": [
+    {
+      "date": "2026-09-29",
+      "timestamp": "29-Sep-2026 15:40:00",
+      "underlying_price": 22716.2,
+      "weekly_expiry": "29-Sep-2026",
+      "monthly_expiry": "29-Sep-2026",
+      "weekly_pcr_oi": 0.882,
+      "weekly_pcr_chg_oi": -0.085,
+      "weekly_max_pain": 22750.0,
+      "weekly_sentiment": "NEUTRAL_RANGEBOUND",
+      "weekly_resistance_1": 22700.0,
+      "weekly_support_1": 22700.0,
+      "monthly_pcr_oi": 0.882,
+      "monthly_sentiment": "NEUTRAL_RANGEBOUND",
+      "market_verdict": "FIRST_RECORDED_SNAPSHOT"
+    }
+  ]
+}

@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NIFTY EOD OI Analysis Dashboard</title>
+    <style>
+        :root {
+            --bg: #0b0f19;
+            --surface: #111827;
+            --surface-elevated: #1f2937;
+            --border: #374151;
+            --text: #f9fafb;
+            --text-muted: #9ca3af;
+            --accent: #38bdf8;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.5;
+            padding: 24px;
+        }
+        .container { max-width: 1300px; margin: 0 auto; }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border);
+        }
+        h1 { font-size: 24px; font-weight: 700; }
+        .meta { color: var(--text-muted); font-size: 14px; margin-top: 4px; }
+        .banner {
+            background: linear-gradient(135deg, rgba(31, 41, 55, 0.9), rgba(17, 24, 39, 0.9));
+            border-left: 4px solid #fbbf24;
+            border-radius: 8px;
+            padding: 16px 20px;
+            margin-bottom: 24px;
+            font-size: 16px;
+            font-weight: 600;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 18px;
+        }
+        .card-label { font-size: 12px; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.05em; }
+        .card-value { font-size: 26px; font-weight: 700; margin-top: 6px; }
+        .badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 9999px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .badge-verdict { background: #fbbf24; color: #000; }
+        .badge-atm { background: var(--accent); color: #000; margin-left: 6px; }
+        .badge-subtle { background: var(--surface-elevated); color: var(--text-muted); font-size: 11px; }
+        .chart-box {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+        .chart-box img { max-width: 100%; height: auto; border-radius: 6px; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+        th, td {
+            padding: 10px 12px;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+        }
+        th { background: var(--surface-elevated); color: var(--text-muted); font-weight: 600; }
+        tr:hover { background: rgba(255, 255, 255, 0.02); }
+        .atm-row { background: rgba(56, 189, 248, 0.12) !important; font-weight: 600; }
+        .strike-val { font-weight: 700; color: var(--text); }
+        .text-success { color: var(--success); font-weight: 600; }
+        .text-danger { color: var(--danger); font-weight: 600; }
+        footer {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 13px;
+            margin-top: 36px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div>
+                <h1>📈 NIFTY EOD OI & Market Direction Dashboard</h1>
+                <div class="meta">NSE Official API &bull; Weekly Expiry: 29-Sep-2026 &bull; Timestamp: 29-Sep-2026 15:40:00</div>
+            </div>
+            <div>
+                <span class="badge badge-verdict">NEUTRAL RANGEBOUND</span>
+            </div>
+        </header>
+
+        <div class="banner">
+            Baseline snapshot established. Day-over-day shift comparison available from next trading session.
+        </div>
+
+        <div class="grid">
+            <div class="card">
+                <div class="card-label">Spot Price</div>
+                <div class="card-value" style="color: var(--accent);">22,716.20</div>
+            </div>
+            <div class="card">
+                <div class="card-label">Max Pain</div>
+                <div class="card-value" style="color: var(--warning);">22,750</div>
+            </div>
+            <div class="card">
+                <div class="card-label">Overall PCR (OI)</div>
+                <div class="card-value" style="color: var(--danger);">0.88</div>
+            </div>
+            <div class="card">
+                <div class="card-label">Change in OI PCR</div>
+                <div class="card-value" style="color: var(--danger);">-0.09</div>
+            </div>
+            <div class="card">
+                <div class="card-label">Key Range (S1 - R1)</div>
+                <div class="card-value" style="font-size: 19px;">22,700 - 22,700</div>
+            </div>
+        </div>
+
+        <div class="chart-box">
+            <h3 style="margin-bottom: 16px; text-align: left;">📊 Open Interest & Build-up Analytics</h3>
+            <img src="latest_oi_chart.png" alt="Open Interest Distribution Chart">
+        </div>
+
+        <div class="card" style="margin-bottom: 24px; overflow-x: auto;">
+            <h3 style="margin-bottom: 16px;">🎯 Strike-by-Strike Buildup (ATM Window)</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Call OI (L)</th>
+                        <th>Call Chg OI (L)</th>
+                        <th>Call Buildup</th>
+                        <th>Strike</th>
+                        <th>Put Buildup</th>
+                        <th>Put Chg OI (L)</th>
+                        <th>Put OI (L)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+            <tr class="">
+                <td>0.02</td>
+                <td class="text-danger">+0.02</td>
+                <td><span class="badge badge-subtle">Short Buildup (Call Writing)</span></td>
+                <td class="strike-val">22,300 </td>
+                <td><span class="badge badge-subtle">Put Writing (Support Creation)</span></td>
+                <td class="text-success">+0.09</td>
+                <td>0.82</td>
+            </tr>
+            
+            <tr class="">
+                <td>0.01</td>
+                <td class="text-danger">+0.01</td>
+                <td><span class="badge badge-subtle">Short Buildup (Call Writing)</span></td>
+                <td class="strike-val">22,350 </td>
+                <td><span class="badge badge-subtle">Put Writing (Support Creation)</span></td>
+                <td class="text-success">+0.26</td>
+                <td>0.56</td>
+            </tr>
+            
+            <tr class="">
+                <td>0.04</td>
+                <td class="text-danger">+0.04</td>
+                <td><span class="badge badge-subtle">Short Buildup (Call Writing)</span></td>
+                <td class="strike-val">22,400 </td>
+                <td><span class="badge badge-subtle">Put Writing (Support Creation)</span></td>
+                <td class="text-success">+0.11</td>
+                <td>0.86</td>
+            </tr>
+            
+            <tr class="">
+                <td>0.03</td>
+                <td class="text-danger">+0.02</td>
+                <td><span class="badge badge-subtle">Short Buildup (Call Writing)</span></td>
+                <td class="strike-val">22,450 </td>
+                <td><span class="badge badge-subtle">Put Writing (Support Creation)</span></td>
+                <td class="text-success">+0.15</td>
+                <td>0.54</td>
+            </tr>
+            
+            <tr class="">
+                <td>0.23</td>
+                <td class="text-danger">+0.10</td>
+                <td><span class="badge badge-subtle">Short Buildup (Call Writing)</span></td>
+                <td class="strike-val">22,500 </td>
+                <td><span class="badge badge-subtle">Put Long Unwinding</span></td>
+                <td class="text-danger">-0.22</td>
+                <td>1.45</td>
+            </tr>
+            
+            <tr class="">
+                <td>0.81</td>
+                <td class="text-danger">+0.80</td>
+                <td><span class="badge badge-subtle">Short Buildup (Call Writing)</span></td>
+                <td class="strike-val">22,550 </td>
+                <td><span class="badge badge-subtle">Put Writing (Support Creation)</span></td>
+                <td class="text-success">+1.04</td>
+                <td>1.55</td>
+            </tr>
+            
+            <tr class="">
+                <td>0.50</td>
+                <td class="text-danger">+0.45</td>
+                <td><span class="badge badge-subtle">Short Buildup (Call Writing)</span></td>
+                <td class="strike-val">22,600 </td>
+                <td><span class="badge badge-subtle">Put Writing (Support Creation)</span></td>
+                <td class="text-success">+1.00</td>
+                <td>2.23</td>
+            </tr>
+            
+            <tr class="">
+                <td>0.88</td>
+                <td class="text-danger">+0.85</td>
+                <td><span class="badge badge-subtle">Short Buildup (Call Writing)</span></td>
+                <td class="strike-val">22,650 </td>
+                <td><span class="badge badge-subtle">Put Writing (Support Creation)</span></td>
+                <td class="text-success">+1.29</td>
+                <td>1.99</td>
+            </tr>
+            
+            <tr class="atm-row">
+                <td>2.05</td>
+                <td class="text-danger">+1.86</td>
+                <td><span class="badge badge-subtle">Short Buildup (Call Writing)</span></td>
+                <td class="strike-val">22,700 <span class="badge badge-atm">ATM</span></td>
+                <td><span class="badge badge-subtle">Put Writing (Support Creation)</span></td>
+                <td class="text-success">+1.74</td>
+                <td>3.09</td>
+            </tr>
+            
+            <tr class="">
+                <td>1.72</td>
+                <td class="text-danger">+1.39</td>
+                <td><span class="badge badge-subtle">Short Buildup (Call Writing)</span></td>
+                <td class="strike-val">22,750 </td>
+                <td><span class="badge badge-subtle">Put Long Unwinding</span></td>
+                <td class="text-danger">-0.43</td>
+                <td>0.58</td>
+            </tr>
+            
+            <tr class="">
+                <td>1.45</td>
+                <td class="text-success">-0.33</td>
+                <td><span class="badge badge-subtle">Long Unwinding</span></td>
+                <td class="strike-val">22,800 </td>
+                <td><span class="badge badge-subtle">Put Short Covering</span></td>
+                <td class="text-danger">-1.25</td>
+                <td>0.44</td>
+            </tr>
+            
+            <tr class="">
+                <td>0.84</td>
+                <td class="text-success">-0.46</td>
+                <td><span class="badge badge-subtle">Long Unwinding</span></td>
+                <td class="strike-val">22,850 </td>
+                <td><span class="badge badge-subtle">Put Short Covering</span></td>
+                <td class="text-danger">-0.46</td>
+                <td>0.25</td>
+            </tr>
+            
+            <tr class="">
+                <td>1.05</td>
+                <td class="text-success">-0.94</td>
+                <td><span class="badge badge-subtle">Long Unwinding</span></td>
+                <td class="strike-val">22,900 </td>
+                <td><span class="badge badge-subtle">Put Short Covering</span></td>
+                <td class="text-danger">-0.48</td>
+                <td>0.30</td>
+            </tr>
+            
+            <tr class="">
+                <td>0.77</td>
+                <td class="text-success">-0.42</td>
+                <td><span class="badge badge-subtle">Long Unwinding</span></td>
+                <td class="strike-val">22,950 </td>
+                <td><span class="badge badge-subtle">Put Short Covering</span></td>
+                <td class="text-danger">-0.23</td>
+                <td>0.13</td>
+            </tr>
+            
+            <tr class="">
+                <td>1.56</td>
+                <td class="text-success">-1.61</td>
+                <td><span class="badge badge-subtle">Long Unwinding</span></td>
+                <td class="strike-val">23,000 </td>
+                <td><span class="badge badge-subtle">Put Short Covering</span></td>
+                <td class="text-danger">-0.45</td>
+                <td>0.48</td>
+            </tr>
+            
+            <tr class="">
+                <td>0.49</td>
+                <td class="text-success">-0.45</td>
+                <td><span class="badge badge-subtle">Long Unwinding</span></td>
+                <td class="strike-val">23,050 </td>
+                <td><span class="badge badge-subtle">Put Short Covering</span></td>
+                <td class="text-danger">-0.06</td>
+                <td>0.09</td>
+            </tr>
+            
+            <tr class="">
+                <td>1.05</td>
+                <td class="text-success">-1.05</td>
+                <td><span class="badge badge-subtle">Long Unwinding</span></td>
+                <td class="strike-val">23,100 </td>
+                <td><span class="badge badge-subtle">Put Short Covering</span></td>
+                <td class="text-danger">-0.27</td>
+                <td>0.36</td>
+            </tr>
+            
+                </tbody>
+            </table>
+        </div>
+
+        <div class="card" style="margin-bottom: 24px; overflow-x: auto;">
+            <h3 style="margin-bottom: 16px;">🗓️ Recent Historical Snapshots</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Spot Close</th>
+                        <th>PCR (OI)</th>
+                        <th>Max Pain</th>
+                        <th>Range (S1 - R1)</th>
+                        <th>Verdict</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+            <tr>
+                <td>2026-09-29</td>
+                <td><b>22,716.20</b></td>
+                <td>0.88</td>
+                <td>22,750</td>
+                <td>22,700 - 22,700</td>
+                <td><span class="badge badge-subtle">NEUTRAL_RANGEBOUND</span></td>
+            </tr>
+            
+                </tbody>
+            </table>
+        </div>
+
+        <footer>
+            Automated NSE EOD Open Interest Analyzer &bull; Hosted on GitHub Pages &bull; Powered by curl_cffi & Python
+        </footer>
+    </div>
+</body>
+</html>
