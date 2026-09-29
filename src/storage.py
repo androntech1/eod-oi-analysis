@@ -7,7 +7,7 @@ from datetime import datetime
 from .config import SNAPSHOT_DIR, HISTORY_FILE
 
 class StorageManager:
-    """Manages EOD snapshot persistence and historical time-series indexing."""
+    """Manages EOD snapshot persistence, historical timeseries indexing, and multi-day lookbacks."""
 
     def __init__(self):
         self.snapshot_dir = SNAPSHOT_DIR
@@ -39,6 +39,7 @@ class StorageManager:
         # Update historical registry
         weekly_summary = analysis_result.get("weekly_analysis", {})
         monthly_summary = analysis_result.get("monthly_analysis", {})
+        playbook = weekly_summary.get("playbook", {})
 
         history = self._load_history()
         symbol_history = history.setdefault(symbol, [])
@@ -50,17 +51,17 @@ class StorageManager:
             "date": date_str,
             "timestamp": weekly_summary.get("timestamp"),
             "underlying_price": weekly_summary.get("underlying_price"),
-            "weekly_expiry": weekly_summary.get("expiry"),
-            "monthly_expiry": monthly_summary.get("expiry"),
+            "active_weekly_expiry": weekly_summary.get("expiry"),
+            "active_monthly_expiry": monthly_summary.get("expiry"),
             "atm_pcr_oi": weekly_summary.get("totals", {}).get("atm_pcr_oi"),
             "atm_pcr_chg_oi": weekly_summary.get("totals", {}).get("atm_pcr_chg_oi"),
-            "weekly_pcr_oi": weekly_summary.get("totals", {}).get("pcr_oi"),
-            "weekly_max_pain": weekly_summary.get("max_pain"),
-            "weekly_regime": weekly_summary.get("playbook", {}).get("regime"),
-            "weekly_resistance_1": weekly_summary.get("sr_levels", {}).get("resistance_1"),
-            "weekly_support_1": weekly_summary.get("sr_levels", {}).get("support_1"),
-            "monthly_pcr_oi": monthly_summary.get("totals", {}).get("atm_pcr_oi"),
-            "market_verdict": analysis_result.get("market_shift", {}).get("shift_status")
+            "full_chain_pcr_oi": weekly_summary.get("totals", {}).get("pcr_oi"),
+            "max_pain": weekly_summary.get("max_pain"),
+            "tactical_regime": playbook.get("regime", "NEUTRAL"),
+            "support_1": weekly_summary.get("sr_levels", {}).get("support_1"),
+            "resistance_1": weekly_summary.get("sr_levels", {}).get("resistance_1"),
+            "monthly_atm_pcr": monthly_summary.get("totals", {}).get("atm_pcr_oi"),
+            "shift_verdict": analysis_result.get("market_shift", {}).get("shift_status")
         }
 
         symbol_history.append(compact_entry)
@@ -69,6 +70,17 @@ class StorageManager:
         self._save_history(history)
 
         return filepath
+
+    def get_snapshot(self, symbol: str, date_str: str) -> Optional[Dict[str, Any]]:
+        """Retrieve full snapshot data for a specific date."""
+        filepath = self.snapshot_dir / f"{date_str}_{symbol}.json"
+        if filepath.exists():
+            try:
+                with open(filepath, "r", encoding="utf-8") as f:
+                    return json.load(f)
+            except Exception:
+                pass
+        return None
 
     def get_previous_snapshot_summary(self, symbol: str, current_date_str: str) -> Optional[Dict[str, Any]]:
         """Retrieve the latest prior day snapshot summary for comparative analysis."""
@@ -79,17 +91,64 @@ class StorageManager:
             return None
 
         latest_past_date = prior_entries[-1]["date"]
-        past_file = self.snapshot_dir / f"{latest_past_date}_{symbol}.json"
-        if past_file.exists():
-            try:
-                with open(past_file, "r", encoding="utf-8") as f:
-                    past_data = json.load(f)
-                    return past_data.get("weekly_analysis")
-            except Exception:
-                pass
+        past_data = self.get_snapshot(symbol, latest_past_date)
+        if past_data:
+            return past_data.get("weekly_analysis")
         return None
 
-    def get_history(self, symbol: str, limit: int = 15) -> List[Dict[str, Any]]:
+    def get_history(self, symbol: str, limit: int = 20) -> List[Dict[str, Any]]:
         """Get past N days history."""
         history = self._load_history()
         return history.get(symbol, [])[-limit:]
+
+    def list_available_dates(self, symbol: str) -> List[str]:
+        """List all dates with saved snapshots."""
+        history = self._load_history()
+        return [e["date"] for e in history.get(symbol, [])]
+
+    def compare_sessions(self, symbol: str, date_newer: str, date_older: str) -> Dict[str, Any]:
+        """Compare any two historical sessions side by side."""
+        snap_new = self.get_snapshot(symbol, date_newer)
+        snap_old = self.get_snapshot(symbol, date_older)
+
+        if not snap_new or not snap_old:
+            return {"error": f"One or both dates ({date_newer}, {date_older}) not found in data archive."}
+
+        w_new = snap_new.get("weekly_analysis", {})
+        w_old = snap_old.get("weekly_analysis", {})
+
+        spot_new = w_new.get("underlying_price", 0.0)
+        spot_old = w_old.get("underlying_price", 0.0)
+        spot_chg = spot_new - spot_old
+        spot_chg_pct = (spot_chg / spot_old * 100) if spot_old > 0 else 0.0
+
+        pcr_new = w_new.get("totals", {}).get("atm_pcr_oi", 1.0)
+        pcr_old = w_old.get("totals", {}).get("atm_pcr_oi", 1.0)
+
+        pain_new = w_new.get("max_pain", 0.0)
+        pain_old = w_old.get("max_pain", 0.0)
+
+        r1_new = w_new.get("sr_levels", {}).get("resistance_1", 0.0)
+        r1_old = w_old.get("sr_levels", {}).get("resistance_1", 0.0)
+        s1_new = w_new.get("sr_levels", {}).get("support_1", 0.0)
+        s1_old = w_old.get("sr_levels", {}).get("support_1", 0.0)
+
+        return {
+            "symbol": symbol,
+            "date_newer": date_newer,
+            "date_older": date_older,
+            "spot_old": spot_old,
+            "spot_new": spot_new,
+            "spot_change": spot_chg,
+            "spot_change_pct": round(spot_chg_pct, 2),
+            "atm_pcr_old": pcr_old,
+            "atm_pcr_new": pcr_new,
+            "atm_pcr_delta": round(pcr_new - pcr_old, 2),
+            "max_pain_old": pain_old,
+            "max_pain_new": pain_new,
+            "max_pain_shift": pain_new - pain_old,
+            "support_migration": f"{s1_old:,.0f} -> {s1_new:,.0f}",
+            "resistance_migration": f"{r1_old:,.0f} -> {r1_new:,.0f}",
+            "regime_old": w_old.get("playbook", {}).get("regime", "N/A"),
+            "regime_new": w_new.get("playbook", {}).get("regime", "N/A"),
+        }

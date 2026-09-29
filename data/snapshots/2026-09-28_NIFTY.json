@@ -1,16 +1,16 @@
 {
   "symbol": "NIFTY",
-  "date": "2026-09-29",
-  "fetch_timestamp": "2026-09-29T22:54:37.268256",
+  "date": "2026-09-28",
+  "fetch_timestamp": "2026-09-29T22:44:49.540229",
   "is_expiry_day": true,
   "expired_today": "29-Sep-2026",
   "weekly_analysis": {
     "symbol": "NIFTY",
     "expiry": "06-Oct-2026",
     "timestamp": "29-Sep-2026 15:40:00",
-    "underlying_price": 22716.2,
+    "underlying_price": 22585.4,
     "atm_strike": 22700,
-    "max_pain": 22800.0,
+    "max_pain": 22650.0,
     "atm_straddle": {
       "premium": 326.5,
       "range_lower": 22374,
@@ -23,16 +23,16 @@
       "pcr_vol": 0.86,
       "atm_ce_oi": 551915.0,
       "atm_pe_oi": 557017.0,
-      "atm_pcr_oi": 1.01,
-      "atm_pcr_chg_oi": 0.74,
+      "atm_pcr_oi": 0.86,
+      "atm_pcr_chg_oi": 0.65,
       "pcr_chg_oi": 0.74
     },
     "sr_levels": {
-      "resistance_1": 23000.0,
+      "resistance_1": 22700.0,
       "resistance_1_oi": 103102.0,
       "resistance_2": 23200.0,
       "resistance_2_oi": 77649.0,
-      "support_1": 22700.0,
+      "support_1": 22500.0,
       "support_1_oi": 71368.0,
       "support_2": 22600.0,
       "support_2_oi": 70248.0,
@@ -54,8 +54,8 @@
       ]
     },
     "playbook": {
-      "regime": "RANGEBOUND_CONSOLIDATION",
-      "regime_desc": "Balanced two-way writing. Market trapped inside S1-R1 strangle corridor.",
+      "regime": "MILD_BEARISH_PRESSURE",
+      "regime_desc": "Overhead Call supply capping upside rallies.",
       "color": "#f59e0b",
       "line_in_the_sand": 22700,
       "smart_money_verdict": "Active battleground (ATM \u00b110) shows an actionable PCR of 1.01 (Chg PCR: 0.74). The primary ceiling is locked at 23,000 (Highest Call OI), while the major institutional floor sits at 22,700 (Highest Put OI). ATM straddle indicates an expected expiration boundary between 22,374 and 23,026.",
@@ -875,20 +875,9 @@
     "all_strikes_count": 135
   },
   "market_shift": {
-    "has_previous_data": true,
-    "shift_status": "RANGEBOUND_CONSOLIDATION",
-    "headline": "\u2696\ufe0f Neutral Consolidation: Option writers pinning price inside S1-R1 corridor.",
-    "spot_change": 130.79999999999927,
-    "spot_change_pct": 0.58,
-    "pcr_delta": 0.15,
-    "pain_shift": 150.0,
-    "prev_verdict": "RANGEBOUND_CONSOLIDATION",
-    "curr_verdict": "RANGEBOUND_CONSOLIDATION",
-    "details": [
-      "Spot Close: 22,585.40 -> 22,716.20 (+130.80 pts, +0.58%)",
-      "Actionable ATM PCR: 0.86 -> 1.01 (+0.15)",
-      "Max Pain Drift: 22,650 -> 22,800 (+150 pts)",
-      "Range Migration: Support 22,700 (prev: 22,500) | Resistance 23,000 (prev: 22,700)"
-    ]
+    "has_previous_data": false,
+    "shift_status": "FIRST_RECORDED_SNAPSHOT",
+    "headline": "Baseline snapshot established. Day-over-day shift comparison available from next trading session.",
+    "details": []
   }
 }

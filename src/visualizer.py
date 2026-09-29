@@ -189,8 +189,8 @@ class OIVisualizer:
         report_path = REPORTS_DIR / filename
         docs_path = DOCS_DIR / filename
 
-        plt.savefig(report_path, dpi=160, bbox_inches="tight", facecolor=self.bg_color)
-        plt.savefig(docs_path, dpi=160, bbox_inches="tight", facecolor=self.bg_color)
+        plt.savefig(str(report_path), dpi=160, bbox_inches="tight", facecolor=self.bg_color)
+        plt.savefig(str(docs_path), dpi=160, bbox_inches="tight", facecolor=self.bg_color)
         plt.close(fig)
 
         return report_path

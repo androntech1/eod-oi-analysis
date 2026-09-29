@@ -1,7 +1,7 @@
 # 🧠 NIFTY EOD Smart Money & Directional Shift Intelligence
-**Date:** `2026-09-29` | **Market Close:** `29-Sep-2026 15:40:00` | **Weekly Expiry:** `29-Sep-2026` | **Monthly Expiry:** `29-Sep-2026`
+**Date:** `2026-09-29` | **Market Close:** `29-Sep-2026 15:40:00` | **Weekly Expiry:** `06-Oct-2026` | **Monthly Expiry:** `27-Oct-2026`
 
-> ### Baseline snapshot established. Day-over-day shift comparison available from next trading session.
+> ### ⚖️ Neutral Consolidation: Option writers pinning price inside S1-R1 corridor.
 
 ## 📈 Executive Intelligence Card
 ![EOD Smart Money OI Intelligence Card](latest_oi_chart.png)
@@ -11,44 +11,50 @@
 
 | Tactical Component | Strategy & Trade Trigger |
 | :--- | :--- |
-| 🟢 **Bullish Trigger** | **Break & 15-min sustain above 22,700 -> Triggers Call short covering towards 22,800** |
+| 🟢 **Bullish Trigger** | **Break & 15-min sustain above 23,000 -> Triggers Call short covering towards 23,100** |
 | 🔴 **Bearish Trigger** | **Break & 15-min sustain below 22,700 -> Triggers Put writer panic unwinding towards 22,600** |
-| ⚖️ **Straddle Corridor** | **Range corridor: 22,700 - 22,700 (Expect mean reversion within this band until breakout occurs)** |
-| 🎯 **Expected Expiry Band** | **`22,684 - 22,716`** (ATM Straddle: `16.3` pts) |
+| ⚖️ **Straddle Corridor** | **Range corridor: 22,700 - 23,000 (Expect mean reversion within this band until breakout occurs)** |
+| 🎯 **Expected Expiry Band** | **`22,374 - 23,026`** (ATM Straddle: `326.5` pts) |
 | 🛡️ **Major Support Floor (S1)** | **`22,700`** (Highest Put OI concentration) |
-| 🧱 **Major Resistance Wall (R1)** | **`22,700`** (Highest Call OI concentration) |
+| 🧱 **Major Resistance Wall (R1)** | **`23,000`** (Highest Call OI concentration) |
 
 ### ⚡ Trapped Writers & Smart Money Footprint
-- **Risk Alert:** Call writers trapped at 22,700 (Spot is trading above fresh call addition). Short covering trigger active!
-- **Actionable ATM Battleground PCR (ATM ±10):** `1.13` *(Unpolluted by far OTM hedge skew)*
-- **Intraday Additions PCR (ATM ±10):** `-1.77` *(Where fresh margin was deployed today)*
-- **Full Chain PCR:** `0.88` *(Included for reference; contains far OTM wing hedges)*
+- **Risk Alert:** Writers comfortable between Support 22,700 and Resistance 23,000.
+- **Actionable ATM Battleground PCR (ATM ±10):** `1.01` *(Unpolluted by far OTM hedge skew)*
+- **Intraday Additions PCR (ATM ±10):** `0.74` *(Where fresh margin was deployed today)*
+- **Full Chain PCR:** `0.79` *(Included for reference; contains far OTM wing hedges)*
+
+### 🔄 Day-over-Day Migration
+- Spot Close: 22,585.40 -> 22,716.20 (+130.80 pts, +0.58%)
+- Actionable ATM PCR: 0.86 -> 1.01 (+0.15)
+- Max Pain Drift: 22,650 -> 22,800 (+150 pts)
+- Range Migration: Support 22,700 (prev: 22,500) | Resistance 23,000 (prev: 22,700)
 
 ### 🗓️ Tactical Weekly vs Structural Monthly Alignment
-- **Weekly Tactical View (29-Sep-2026):** `RANGEBOUND CONSOLIDATION` (ATM PCR: `1.13`)
-- **Monthly Structural View (29-Sep-2026):** `RANGEBOUND CONSOLIDATION` (ATM PCR: `1.13`)
+- **Weekly Tactical View (06-Oct-2026):** `RANGEBOUND CONSOLIDATION` (ATM PCR: `1.01`)
+- **Monthly Structural View (27-Oct-2026):** `RANGEBOUND CONSOLIDATION` (ATM PCR: `1.61`)
 - **Alignment:** Weekly and Monthly trends are **congruent (RANGEBOUND CONSOLIDATION)**, reinforcing trend durability.
 
 ### 🎯 Strike Buildup Heatmap (ATM ± 8 Strikes)
 | Call OI (L) | Call Chg (L) | Call Buildup | Strike | Put Buildup | Put Chg (L) | Put OI (L) |
 | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| 0.02 | +0.02 | Short Buildup (Call Writing) | **22,300** | Put Writing (Support Creation) | +0.09 | 0.82 |
-| 0.01 | +0.01 | Short Buildup (Call Writing) | **22,350** | Put Writing (Support Creation) | +0.26 | 0.56 |
-| 0.04 | +0.04 | Short Buildup (Call Writing) | **22,400** | Put Writing (Support Creation) | +0.11 | 0.86 |
-| 0.03 | +0.02 | Short Buildup (Call Writing) | **22,450** | Put Writing (Support Creation) | +0.15 | 0.54 |
-| 0.23 | +0.10 | Short Buildup (Call Writing) | **22,500** | Put Long Unwinding | -0.22 | 1.45 |
-| 0.81 | +0.80 | Short Buildup (Call Writing) | **22,550** | Put Writing (Support Creation) | +1.04 | 1.55 |
-| 0.50 | +0.45 | Short Buildup (Call Writing) | **22,600** | Put Writing (Support Creation) | +1.00 | 2.23 |
-| 0.88 | +0.85 | Short Buildup (Call Writing) | **22,650** | Put Writing (Support Creation) | +1.29 | 1.99 |
-| 2.05 | +1.86 | Short Buildup (Call Writing) | **22,700** **(ATM)** | Put Writing (Support Creation) | +1.74 | 3.09 |
-| 1.72 | +1.39 | Short Buildup (Call Writing) | **22,750** | Put Long Unwinding | -0.43 | 0.58 |
-| 1.45 | -0.33 | Long Unwinding | **22,800** | Put Short Covering | -1.25 | 0.44 |
-| 0.84 | -0.46 | Long Unwinding | **22,850** | Put Short Covering | -0.46 | 0.25 |
-| 1.05 | -0.94 | Long Unwinding | **22,900** | Put Short Covering | -0.48 | 0.30 |
-| 0.77 | -0.42 | Long Unwinding | **22,950** | Put Short Covering | -0.23 | 0.13 |
-| 1.56 | -1.61 | Long Unwinding | **23,000** | Put Short Covering | -0.45 | 0.48 |
-| 0.49 | -0.45 | Long Unwinding | **23,050** | Put Short Covering | -0.06 | 0.09 |
-| 1.05 | -1.05 | Long Unwinding | **23,100** | Put Short Covering | -0.27 | 0.36 |
+| 0.02 | +0.01 | Short Buildup (Call Writing) | **22,300** | Put Writing (Support Creation) | +0.17 | 0.37 |
+| 0.00 | +0.00 | Short Buildup (Call Writing) | **22,350** | Put Writing (Support Creation) | +0.13 | 0.18 |
+| 0.02 | +0.01 | Short Buildup (Call Writing) | **22,400** | Put Writing (Support Creation) | +0.11 | 0.37 |
+| 0.03 | +0.01 | Short Buildup (Call Writing) | **22,450** | Put Writing (Support Creation) | +0.06 | 0.09 |
+| 0.11 | +0.06 | Short Buildup (Call Writing) | **22,500** | Put Writing (Support Creation) | +0.25 | 0.62 |
+| 0.02 | +0.01 | Short Buildup (Call Writing) | **22,550** | Put Writing (Support Creation) | +0.06 | 0.11 |
+| 0.30 | +0.28 | Short Buildup (Call Writing) | **22,600** | Put Writing (Support Creation) | +0.44 | 0.70 |
+| 0.08 | +0.08 | Short Buildup (Call Writing) | **22,650** | Put Writing (Support Creation) | +0.14 | 0.18 |
+| 0.55 | +0.50 | Short Buildup (Call Writing) | **22,700** **(ATM)** | Put Writing (Support Creation) | +0.51 | 0.71 |
+| 0.12 | +0.08 | Short Buildup (Call Writing) | **22,750** | Put Writing (Support Creation) | +0.11 | 0.19 |
+| 0.59 | +0.36 | Short Buildup (Call Writing) | **22,800** | Put Writing (Support Creation) | +0.21 | 0.51 |
+| 0.16 | +0.07 | Short Buildup (Call Writing) | **22,850** | Put Long Unwinding | -0.00 | 0.05 |
+| 0.40 | +0.16 | Short Buildup (Call Writing) | **22,900** | Put Long Unwinding | -0.02 | 0.19 |
+| 0.15 | +0.08 | Short Buildup (Call Writing) | **22,950** | Put Writing (Support Creation) | +0.02 | 0.06 |
+| 1.03 | +0.50 | Short Buildup (Call Writing) | **23,000** | Put Short Covering | -0.00 | 0.32 |
+| 0.23 | +0.09 | Short Buildup (Call Writing) | **23,050** | Put Short Covering | -0.00 | 0.07 |
+| 0.67 | +0.21 | Short Buildup (Call Writing) | **23,100** | Put Short Covering | -0.04 | 0.20 |
 
 ---
 *Auto-generated by EOD OI Analysis Engine with browser TLS impersonation via curl_cffi.*

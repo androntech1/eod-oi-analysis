@@ -1,20 +1,36 @@
 {
   "NIFTY": [
     {
+      "date": "2026-09-28",
+      "timestamp": "28-Sep-2026 15:40:00",
+      "underlying_price": 22585.4,
+      "active_weekly_expiry": "29-Sep-2026",
+      "active_monthly_expiry": "29-Sep-2026",
+      "atm_pcr_oi": 0.86,
+      "atm_pcr_chg_oi": 0.65,
+      "full_chain_pcr_oi": 0.82,
+      "max_pain": 22650.0,
+      "tactical_regime": "MILD_BEARISH_PRESSURE",
+      "support_1": 22500.0,
+      "resistance_1": 22700.0,
+      "monthly_atm_pcr": 0.86,
+      "shift_verdict": "BEAR_CONTINUATION"
+    },
+    {
       "date": "2026-09-29",
       "timestamp": "29-Sep-2026 15:40:00",
       "underlying_price": 22716.2,
-      "weekly_expiry": "29-Sep-2026",
-      "monthly_expiry": "29-Sep-2026",
-      "atm_pcr_oi": 1.13,
-      "atm_pcr_chg_oi": -1.77,
-      "weekly_pcr_oi": 0.88,
-      "weekly_max_pain": 22750.0,
-      "weekly_regime": "RANGEBOUND_CONSOLIDATION",
-      "weekly_resistance_1": 22700.0,
-      "weekly_support_1": 22700.0,
-      "monthly_pcr_oi": 1.13,
-      "market_verdict": "FIRST_RECORDED_SNAPSHOT"
+      "active_weekly_expiry": "06-Oct-2026",
+      "active_monthly_expiry": "27-Oct-2026",
+      "atm_pcr_oi": 1.01,
+      "atm_pcr_chg_oi": 0.74,
+      "full_chain_pcr_oi": 0.79,
+      "max_pain": 22800.0,
+      "tactical_regime": "RANGEBOUND_CONSOLIDATION",
+      "support_1": 22700.0,
+      "resistance_1": 23000.0,
+      "monthly_atm_pcr": 1.61,
+      "shift_verdict": "RANGEBOUND_CONSOLIDATION"
     }
   ]
 }
