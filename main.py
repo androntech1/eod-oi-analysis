@@ -118,15 +118,15 @@ def run(symbol: str = "NIFTY", date_str: str = None, impersonate: str = "chrome1
     logger.info("EOD snapshot saved: %s", saved_snapshot_path)
 
     # 5. Generate Visual Charts
+    history = storage.get_history(symbol, limit=15)
     if not skip_chart:
         visualizer = OIVisualizer()
-        chart_path = visualizer.generate_chart(analysis_result, filename="latest_oi_chart.png")
+        chart_path = visualizer.generate_chart(analysis_result, history=history, filename="latest_oi_chart.png")
         logger.info("Visual intelligence card generated: %s", chart_path)
 
     # 6. Generate Markdown & HTML Reports
     reporter = OIReporter()
     report_md = reporter.generate_markdown_report(analysis_result, date_str=date_str)
-    history = storage.get_history(symbol, limit=15)
     html_dashboard = reporter.generate_html_dashboard(analysis_result, history=history)
     logger.info("Markdown report saved: %s", report_md)
     logger.info("HTML dashboard saved: %s", html_dashboard)
