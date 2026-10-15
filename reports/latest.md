@@ -1,39 +1,39 @@
 # 🧠 NIFTY EOD Smart Money & Directional Shift Intelligence
-**Date:** `2026-10-14` | **Market Close:** `14-Oct-2026 15:40:00` | **Weekly Expiry:** `19-Oct-2026` | **Monthly Expiry:** `27-Oct-2026`
+**Date:** `2026-10-15` | **Market Close:** `15-Oct-2026 15:40:00` | **Weekly Expiry:** `19-Oct-2026` | **Monthly Expiry:** `27-Oct-2026`
 
-> ### 🔻 BREAKDOWN EXPANSION: Support gave way to aggressive Bearish selling!
+> ### ⚖️ Neutral Consolidation: Option writers pinning price inside S1-R1 corridor.
 
 ## 📈 Executive Intelligence Card
 ![EOD Smart Money OI Intelligence Card](latest_oi_chart.png)
 
 ## 🎯 Institutional Playbook & Action Plan for Next Session
-**Market Regime:** `STRONG BEARISH EXPANSION` — *Heavy Call writing advancing lower. Bears dominating overhead supply.*
+**Market Regime:** `RANGEBOUND CONSOLIDATION` — *Balanced two-way writing. Market trapped inside S1-R1 strangle corridor.*
 
 | Tactical Component | Strategy & Trade Trigger |
 | :--- | :--- |
-| 🟢 **Bullish Trigger** | **Break & 15-min sustain above 23,000 -> Triggers Call short covering towards 23,100** |
+| 🟢 **Bullish Trigger** | **Break & 15-min sustain above 23,500 -> Triggers Call short covering towards 23,600** |
 | 🔴 **Bearish Trigger** | **Break & 15-min sustain below 22,500 -> Triggers Put writer panic unwinding towards 22,400** |
-| ⚖️ **Straddle Corridor** | **Range corridor: 22,500 - 23,000 (Expect mean reversion within this band until breakout occurs)** |
-| 🎯 **Expected Expiry Band** | **`22,321 - 22,879`** (ATM Straddle: `279.2` pts) |
+| ⚖️ **Straddle Corridor** | **Range corridor: 22,500 - 23,500 (Expect mean reversion within this band until breakout occurs)** |
+| 🎯 **Expected Expiry Band** | **`22,768 - 23,232`** (ATM Straddle: `231.8` pts) |
 | 🛡️ **Major Support Floor (S1)** | **`22,500`** (Highest Put OI concentration) |
-| 🧱 **Major Resistance Wall (R1)** | **`23,000`** (Highest Call OI concentration) |
+| 🧱 **Major Resistance Wall (R1)** | **`23,500`** (Highest Call OI concentration) |
 
 ### ⚡ Trapped Writers & Smart Money Footprint
-- **Risk Alert:** Writers comfortable between Support 22,500 and Resistance 23,000.
-- **Actionable ATM Battleground PCR (ATM ±10):** `0.75` *(Unpolluted by far OTM hedge skew)*
-- **Intraday Additions PCR (ATM ±10):** `0.12` *(Where fresh margin was deployed today)*
-- **Full Chain PCR:** `0.86` *(Included for reference; contains far OTM wing hedges)*
+- **Risk Alert:** Writers comfortable between Support 22,500 and Resistance 23,500.
+- **Actionable ATM Battleground PCR (ATM ±10):** `1.02` *(Unpolluted by far OTM hedge skew)*
+- **Intraday Additions PCR (ATM ±10):** `-2.63` *(Where fresh margin was deployed today)*
+- **Full Chain PCR:** `1.66` *(Included for reference; contains far OTM wing hedges)*
 
 ### 🔄 Day-over-Day Migration
-- Spot Close: 22,721.95 -> 22,622.70 (-99.25 pts, -0.44%)
-- Actionable ATM PCR: 1.04 -> 0.75 (-0.29)
-- Max Pain Drift: 22,700 -> 22,600 (-100 pts)
-- Range Migration: Support 22,500 (prev: 22,500) | Resistance 23,000 (prev: 23,000)
+- Spot Close: 22,622.70 -> 22,997.35 (+374.65 pts, +1.66%)
+- Actionable ATM PCR: 0.75 -> 1.02 (+0.27)
+- Max Pain Drift: 22,600 -> 22,900 (+300 pts)
+- Range Migration: Support 22,500 (prev: 22,500) | Resistance 23,500 (prev: 23,000)
 
 ### 🗓️ Tactical Weekly vs Structural Monthly Alignment
-- **Weekly Tactical View (19-Oct-2026):** `STRONG BEARISH EXPANSION` (ATM PCR: `0.75`)
-- **Monthly Structural View (27-Oct-2026):** `RANGEBOUND CONSOLIDATION` (ATM PCR: `0.97`)
-- **Alignment:** **Tactical divergence detected** between weekly momentum (`STRONG BEARISH EXPANSION`) and monthly backdrop (`RANGEBOUND CONSOLIDATION`). Anticipate chop at S1/R1 boundaries.
+- **Weekly Tactical View (19-Oct-2026):** `RANGEBOUND CONSOLIDATION` (ATM PCR: `1.02`)
+- **Monthly Structural View (27-Oct-2026):** `MILD BEARISH PRESSURE` (ATM PCR: `0.88`)
+- **Alignment:** **Tactical divergence detected** between weekly momentum (`RANGEBOUND CONSOLIDATION`) and monthly backdrop (`MILD BEARISH PRESSURE`). Anticipate chop at S1/R1 boundaries.
 
 
 ---
