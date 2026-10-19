@@ -1,5 +1,5 @@
 # 🧠 NIFTY EOD Smart Money & Directional Shift Intelligence
-**Date:** `2026-10-16` | **Market Close:** `16-Oct-2026 15:40:00` | **Weekly Expiry:** `19-Oct-2026` | **Monthly Expiry:** `27-Oct-2026`
+**Date:** `2026-10-19` | **Market Close:** `19-Oct-2026 15:40:00` | **Weekly Expiry:** `27-Oct-2026` | **Monthly Expiry:** `27-Oct-2026`
 
 > ### ⚖️ Neutral Consolidation: Option writers pinning price inside S1-R1 corridor.
 
@@ -11,28 +11,28 @@
 
 | Tactical Component | Strategy & Trade Trigger |
 | :--- | :--- |
-| 🟢 **Bullish Trigger** | **Break & 15-min sustain above 23,500 -> Triggers Call short covering towards 23,600** |
-| 🔴 **Bearish Trigger** | **Break & 15-min sustain below 22,700 -> Triggers Put writer panic unwinding towards 22,600** |
-| ⚖️ **Straddle Corridor** | **Range corridor: 22,700 - 23,500 (Expect mean reversion within this band until breakout occurs)** |
-| 🎯 **Expected Expiry Band** | **`22,967 - 23,333`** (ATM Straddle: `183.4` pts) |
-| 🛡️ **Major Support Floor (S1)** | **`22,700`** (Highest Put OI concentration) |
-| 🧱 **Major Resistance Wall (R1)** | **`23,500`** (Highest Call OI concentration) |
+| 🟢 **Bullish Trigger** | **Break & 15-min sustain above 23,000 -> Triggers Call short covering towards 23,100** |
+| 🔴 **Bearish Trigger** | **Break & 15-min sustain below 22,500 -> Triggers Put writer panic unwinding towards 22,400** |
+| ⚖️ **Straddle Corridor** | **Range corridor: 22,500 - 23,000 (Expect mean reversion within this band until breakout occurs)** |
+| 🎯 **Expected Expiry Band** | **`22,558 - 23,242`** (ATM Straddle: `342.4` pts) |
+| 🛡️ **Major Support Floor (S1)** | **`22,500`** (Highest Put OI concentration) |
+| 🧱 **Major Resistance Wall (R1)** | **`23,000`** (Highest Call OI concentration) |
 
 ### ⚡ Trapped Writers & Smart Money Footprint
-- **Risk Alert:** Writers comfortable between Support 22,700 and Resistance 23,500.
-- **Actionable ATM Battleground PCR (ATM ±10):** `0.89` *(Unpolluted by far OTM hedge skew)*
-- **Intraday Additions PCR (ATM ±10):** `1.81` *(Where fresh margin was deployed today)*
-- **Full Chain PCR:** `1.32` *(Included for reference; contains far OTM wing hedges)*
+- **Risk Alert:** Put writers trapped at 22,900 (Spot closed below fresh put addition). Long liquidation pressure elevated!
+- **Actionable ATM Battleground PCR (ATM ±10):** `0.92` *(Unpolluted by far OTM hedge skew)*
+- **Intraday Additions PCR (ATM ±10):** `0.40` *(Where fresh margin was deployed today)*
+- **Full Chain PCR:** `0.88` *(Included for reference; contains far OTM wing hedges)*
 
 ### 🔄 Day-over-Day Migration
-- Spot Close: 22,997.35 -> 23,146.15 (+148.80 pts, +0.65%)
-- Actionable ATM PCR: 1.02 -> 0.89 (-0.13)
-- Max Pain Drift: 22,900 -> 23,050 (+150 pts)
-- Range Migration: Support 22,700 (prev: 22,500) | Resistance 23,500 (prev: 23,500)
+- Spot Close: 23,146.15 -> 22,888.95 (-257.20 pts, -1.11%)
+- Actionable ATM PCR: 0.89 -> 0.92 (+0.03)
+- Max Pain Drift: 23,050 -> 23,000 (-50 pts)
+- Range Migration: Support 22,500 (prev: 22,700) | Resistance 23,000 (prev: 23,500)
 
 ### 🗓️ Tactical Weekly vs Structural Monthly Alignment
-- **Weekly Tactical View (19-Oct-2026):** `RANGEBOUND CONSOLIDATION` (ATM PCR: `0.89`)
-- **Monthly Structural View (27-Oct-2026):** `RANGEBOUND CONSOLIDATION` (ATM PCR: `0.77`)
+- **Weekly Tactical View (27-Oct-2026):** `RANGEBOUND CONSOLIDATION` (ATM PCR: `0.92`)
+- **Monthly Structural View (27-Oct-2026):** `RANGEBOUND CONSOLIDATION` (ATM PCR: `0.92`)
 - **Alignment:** Weekly and Monthly trends are **congruent (RANGEBOUND CONSOLIDATION)**, reinforcing trend durability.
 
 
