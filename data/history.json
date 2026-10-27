@@ -335,6 +335,22 @@
       "resistance_1": 23000.0,
       "monthly_atm_pcr": 0.97,
       "shift_verdict": "RANGEBOUND_CONSOLIDATION"
+    },
+    {
+      "date": "2026-10-27",
+      "timestamp": "27-Oct-2026 15:40:00",
+      "underlying_price": 22749.75,
+      "active_weekly_expiry": "03-Nov-2026",
+      "active_monthly_expiry": "23-Nov-2026",
+      "atm_pcr_oi": 0.78,
+      "atm_pcr_chg_oi": 0.68,
+      "full_chain_pcr_oi": 1.01,
+      "max_pain": 22750.0,
+      "tactical_regime": "MILD_BEARISH_PRESSURE",
+      "support_1": 22700.0,
+      "resistance_1": 23000.0,
+      "monthly_atm_pcr": 1.23,
+      "shift_verdict": "BEARISH_BREAKDOWN"
     }
   ]
 }
