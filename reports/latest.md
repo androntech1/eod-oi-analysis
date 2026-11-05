@@ -1,39 +1,39 @@
 # 🧠 NIFTY EOD Smart Money & Directional Shift Intelligence
-**Date:** `2026-11-04` | **Market Close:** `04-Nov-2026 15:40:00` | **Weekly Expiry:** `09-Nov-2026` | **Monthly Expiry:** `23-Nov-2026`
+**Date:** `2026-11-05` | **Market Close:** `05-Nov-2026 15:40:00` | **Weekly Expiry:** `09-Nov-2026` | **Monthly Expiry:** `23-Nov-2026`
 
-> ### ⚖️ Neutral Consolidation: Option writers pinning price inside S1-R1 corridor.
+> ### 🔻 BREAKDOWN EXPANSION: Support gave way to aggressive Bearish selling!
 
 ## 📈 Executive Intelligence Card
 ![EOD Smart Money OI Intelligence Card](latest_oi_chart.png)
 
 ## 🎯 Institutional Playbook & Action Plan for Next Session
-**Market Regime:** `RANGEBOUND CONSOLIDATION` — *Balanced two-way writing. Market trapped inside S1-R1 strangle corridor.*
+**Market Regime:** `STRONG BEARISH EXPANSION` — *Heavy Call writing advancing lower. Bears dominating overhead supply.*
 
 | Tactical Component | Strategy & Trade Trigger |
 | :--- | :--- |
-| 🟢 **Bullish Trigger** | **Break & 15-min sustain above 24,000 -> Triggers Call short covering towards 24,100** |
-| 🔴 **Bearish Trigger** | **Break & 15-min sustain below 23,500 -> Triggers Put writer panic unwinding towards 23,400** |
-| ⚖️ **Straddle Corridor** | **Range corridor: 23,500 - 24,000 (Expect mean reversion within this band until breakout occurs)** |
-| 🎯 **Expected Expiry Band** | **`23,617 - 24,283`** (ATM Straddle: `332.9` pts) |
-| 🛡️ **Major Support Floor (S1)** | **`23,500`** (Highest Put OI concentration) |
-| 🧱 **Major Resistance Wall (R1)** | **`24,000`** (Highest Call OI concentration) |
+| 🟢 **Bullish Trigger** | **Break & 15-min sustain above 25,000 -> Triggers Call short covering towards 25,100** |
+| 🔴 **Bearish Trigger** | **Break & 15-min sustain below 24,400 -> Triggers Put writer panic unwinding towards 24,300** |
+| ⚖️ **Straddle Corridor** | **Range corridor: 24,400 - 25,000 (Expect mean reversion within this band until breakout occurs)** |
+| 🎯 **Expected Expiry Band** | **`24,223 - 24,877`** (ATM Straddle: `326.7` pts) |
+| 🛡️ **Major Support Floor (S1)** | **`24,400`** (Highest Put OI concentration) |
+| 🧱 **Major Resistance Wall (R1)** | **`25,000`** (Highest Call OI concentration) |
 
 ### ⚡ Trapped Writers & Smart Money Footprint
-- **Risk Alert:** Call writers trapped at 23,900 (Spot is trading above fresh call addition). Short covering trigger active!
-- **Actionable ATM Battleground PCR (ATM ±10):** `0.71` *(Unpolluted by far OTM hedge skew)*
-- **Intraday Additions PCR (ATM ±10):** `1.27` *(Where fresh margin was deployed today)*
-- **Full Chain PCR:** `1.07` *(Included for reference; contains far OTM wing hedges)*
+- **Risk Alert:** Writers comfortable between Support 24,400 and Resistance 25,000.
+- **Actionable ATM Battleground PCR (ATM ±10):** `0.69` *(Unpolluted by far OTM hedge skew)*
+- **Intraday Additions PCR (ATM ±10):** `-8.83` *(Where fresh margin was deployed today)*
+- **Full Chain PCR:** `1.34` *(Included for reference; contains far OTM wing hedges)*
 
 ### 🔄 Day-over-Day Migration
-- Spot Close: 23,810.85 -> 23,960.60 (+149.75 pts, +0.63%)
-- Actionable ATM PCR: 0.63 -> 0.71 (+0.08)
-- Max Pain Drift: 23,600 -> 23,800 (+200 pts)
-- Range Migration: Support 23,500 (prev: 23,600) | Resistance 24,000 (prev: 24,000)
+- Spot Close: 23,960.60 -> 24,536.60 (+576.00 pts, +2.40%)
+- Actionable ATM PCR: 0.71 -> 0.69 (-0.02)
+- Max Pain Drift: 23,800 -> 24,350 (+550 pts)
+- Range Migration: Support 24,400 (prev: 23,500) | Resistance 25,000 (prev: 24,000)
 
 ### 🗓️ Tactical Weekly vs Structural Monthly Alignment
-- **Weekly Tactical View (09-Nov-2026):** `RANGEBOUND CONSOLIDATION` (ATM PCR: `0.71`)
-- **Monthly Structural View (23-Nov-2026):** `RANGEBOUND CONSOLIDATION` (ATM PCR: `0.72`)
-- **Alignment:** Weekly and Monthly trends are **congruent (RANGEBOUND CONSOLIDATION)**, reinforcing trend durability.
+- **Weekly Tactical View (09-Nov-2026):** `STRONG BEARISH EXPANSION` (ATM PCR: `0.69`)
+- **Monthly Structural View (23-Nov-2026):** `RANGEBOUND CONSOLIDATION` (ATM PCR: `0.69`)
+- **Alignment:** **Tactical divergence detected** between weekly momentum (`STRONG BEARISH EXPANSION`) and monthly backdrop (`RANGEBOUND CONSOLIDATION`). Anticipate chop at S1/R1 boundaries.
 
 
 ---
