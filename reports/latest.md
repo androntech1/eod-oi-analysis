@@ -1,7 +1,7 @@
 # 🧠 NIFTY EOD Smart Money & Directional Shift Intelligence
-**Date:** `2026-11-09` | **Market Close:** `09-Nov-2026 15:40:00` | **Weekly Expiry:** `17-Nov-2026` | **Monthly Expiry:** `23-Nov-2026`
+**Date:** `2026-11-10` | **Market Close:** `09-Nov-2026 15:40:00` | **Weekly Expiry:** `17-Nov-2026` | **Monthly Expiry:** `23-Nov-2026`
 
-> ### ⚖️ Neutral Consolidation: Option writers pinning price inside S1-R1 corridor.
+> ### 🔴 Bear Phase Continues: Persistent Call additions capping rallies.
 
 ## 📈 Executive Intelligence Card
 ![EOD Smart Money OI Intelligence Card](latest_oi_chart.png)
@@ -25,10 +25,10 @@
 - **Full Chain PCR:** `1.14` *(Included for reference; contains far OTM wing hedges)*
 
 ### 🔄 Day-over-Day Migration
-- Spot Close: 25,030.35 -> 25,044.65 (+14.30 pts, +0.06%)
-- Actionable ATM PCR: 0.59 -> 0.71 (+0.12)
-- Max Pain Drift: 24,700 -> 24,800 (+100 pts)
-- Range Migration: Support 25,000 (prev: 24,600) | Resistance 25,500 (prev: 25,000)
+- Spot Close: 25,044.65 -> 25,044.65 (+0.00 pts, +0.00%)
+- Actionable ATM PCR: 0.71 -> 0.71 (+0.00)
+- Max Pain Drift: 24,800 -> 24,800 (+0 pts)
+- Range Migration: Support 25,000 (prev: 25,000) | Resistance 25,500 (prev: 25,500)
 
 ### 🗓️ Tactical Weekly vs Structural Monthly Alignment
 - **Weekly Tactical View (17-Nov-2026):** `MILD BEARISH PRESSURE` (ATM PCR: `0.71`)
