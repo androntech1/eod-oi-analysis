@@ -1,39 +1,39 @@
 # 🧠 NIFTY EOD Smart Money & Directional Shift Intelligence
-**Date:** `2026-11-18` | **Market Close:** `18-Nov-2026 15:40:00` | **Weekly Expiry:** `23-Nov-2026` | **Monthly Expiry:** `23-Nov-2026`
+**Date:** `2026-11-19` | **Market Close:** `19-Nov-2026 15:40:00` | **Weekly Expiry:** `23-Nov-2026` | **Monthly Expiry:** `23-Nov-2026`
 
-> ### 🔻 BREAKDOWN EXPANSION: Support gave way to aggressive Bearish selling!
+> ### ⚖️ Neutral Consolidation: Option writers pinning price inside S1-R1 corridor.
 
 ## 📈 Executive Intelligence Card
 ![EOD Smart Money OI Intelligence Card](latest_oi_chart.png)
 
 ## 🎯 Institutional Playbook & Action Plan for Next Session
-**Market Regime:** `MILD BEARISH PRESSURE` — *Overhead Call supply capping upside rallies. Sell on rise near R1.*
+**Market Regime:** `RANGEBOUND CONSOLIDATION` — *Balanced two-way writing. Market trapped inside S1-R1 strangle corridor.*
 
 | Tactical Component | Strategy & Trade Trigger |
 | :--- | :--- |
-| 🟢 **Bullish Trigger** | **Break & 15-min sustain above 25,500 -> Triggers Call short covering towards 25,600** |
+| 🟢 **Bullish Trigger** | **Break & 15-min sustain above 26,000 -> Triggers Call short covering towards 26,100** |
 | 🔴 **Bearish Trigger** | **Break & 15-min sustain below 25,000 -> Triggers Put writer panic unwinding towards 24,900** |
-| ⚖️ **Straddle Corridor** | **Range corridor: 25,000 - 25,500 (Expect mean reversion within this band until breakout occurs)** |
-| 🎯 **Expected Expiry Band** | **`24,924 - 25,576`** (ATM Straddle: `325.9` pts) |
+| ⚖️ **Straddle Corridor** | **Range corridor: 25,000 - 26,000 (Expect mean reversion within this band until breakout occurs)** |
+| 🎯 **Expected Expiry Band** | **`25,227 - 25,773`** (ATM Straddle: `272.6` pts) |
 | 🛡️ **Major Support Floor (S1)** | **`25,000`** (Highest Put OI concentration) |
-| 🧱 **Major Resistance Wall (R1)** | **`25,500`** (Highest Call OI concentration) |
+| 🧱 **Major Resistance Wall (R1)** | **`26,000`** (Highest Call OI concentration) |
 
 ### ⚡ Trapped Writers & Smart Money Footprint
-- **Risk Alert:** Writers comfortable between Support 25,000 and Resistance 25,500.
-- **Actionable ATM Battleground PCR (ATM ±10):** `0.77` *(Unpolluted by far OTM hedge skew)*
-- **Intraday Additions PCR (ATM ±10):** `0.13` *(Where fresh margin was deployed today)*
-- **Full Chain PCR:** `0.85` *(Included for reference; contains far OTM wing hedges)*
+- **Risk Alert:** Writers comfortable between Support 25,000 and Resistance 26,000.
+- **Actionable ATM Battleground PCR (ATM ±10):** `1.09` *(Unpolluted by far OTM hedge skew)*
+- **Intraday Additions PCR (ATM ±10):** `-2.40` *(Where fresh margin was deployed today)*
+- **Full Chain PCR:** `1.47` *(Included for reference; contains far OTM wing hedges)*
 
 ### 🔄 Day-over-Day Migration
-- Spot Close: 25,387.40 -> 25,227.95 (-159.45 pts, -0.63%)
-- Actionable ATM PCR: 0.99 -> 0.77 (-0.22)
-- Max Pain Drift: 25,000 -> 25,050 (+50 pts)
-- Range Migration: Support 25,000 (prev: 25,000) | Resistance 25,500 (prev: 25,500)
+- Spot Close: 25,227.95 -> 25,514.30 (+286.35 pts, +1.14%)
+- Actionable ATM PCR: 0.77 -> 1.09 (+0.32)
+- Max Pain Drift: 25,050 -> 25,300 (+250 pts)
+- Range Migration: Support 25,000 (prev: 25,000) | Resistance 26,000 (prev: 25,500)
 
 ### 🗓️ Tactical Weekly vs Structural Monthly Alignment
-- **Weekly Tactical View (23-Nov-2026):** `MILD BEARISH PRESSURE` (ATM PCR: `0.77`)
-- **Monthly Structural View (23-Nov-2026):** `MILD BEARISH PRESSURE` (ATM PCR: `0.77`)
-- **Alignment:** Weekly and Monthly trends are **congruent (MILD BEARISH PRESSURE)**, reinforcing trend durability.
+- **Weekly Tactical View (23-Nov-2026):** `RANGEBOUND CONSOLIDATION` (ATM PCR: `1.09`)
+- **Monthly Structural View (23-Nov-2026):** `RANGEBOUND CONSOLIDATION` (ATM PCR: `1.09`)
+- **Alignment:** Weekly and Monthly trends are **congruent (RANGEBOUND CONSOLIDATION)**, reinforcing trend durability.
 
 
 ---
