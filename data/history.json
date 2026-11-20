@@ -623,6 +623,22 @@
       "resistance_1": 26000.0,
       "monthly_atm_pcr": 1.09,
       "shift_verdict": "RANGEBOUND_CONSOLIDATION"
+    },
+    {
+      "date": "2026-11-20",
+      "timestamp": "20-Nov-2026 15:40:00",
+      "underlying_price": 25800.6,
+      "active_weekly_expiry": "23-Nov-2026",
+      "active_monthly_expiry": "23-Nov-2026",
+      "atm_pcr_oi": 0.92,
+      "atm_pcr_chg_oi": -42.51,
+      "full_chain_pcr_oi": 1.67,
+      "max_pain": 25500.0,
+      "tactical_regime": "RANGEBOUND_CONSOLIDATION",
+      "support_1": 25500.0,
+      "resistance_1": 26000.0,
+      "monthly_atm_pcr": 0.92,
+      "shift_verdict": "RANGEBOUND_CONSOLIDATION"
     }
   ]
 }
