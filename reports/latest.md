@@ -1,5 +1,5 @@
 # 🧠 NIFTY EOD Smart Money & Directional Shift Intelligence
-**Date:** `2026-11-23` | **Market Close:** `23-Nov-2026 15:40:00` | **Weekly Expiry:** `01-Dec-2026` | **Monthly Expiry:** `29-Dec-2026`
+**Date:** `2026-11-24` | **Market Close:** `23-Nov-2026 15:40:00` | **Weekly Expiry:** `01-Dec-2026` | **Monthly Expiry:** `29-Dec-2026`
 
 > ### ⚖️ Neutral Consolidation: Option writers pinning price inside S1-R1 corridor.
 
@@ -25,10 +25,10 @@
 - **Full Chain PCR:** `0.70` *(Included for reference; contains far OTM wing hedges)*
 
 ### 🔄 Day-over-Day Migration
-- Spot Close: 25,800.60 -> 25,349.65 (-450.95 pts, -1.75%)
-- Actionable ATM PCR: 0.92 -> 0.99 (+0.07)
+- Spot Close: 25,349.65 -> 25,349.65 (+0.00 pts, +0.00%)
+- Actionable ATM PCR: 0.99 -> 0.99 (+0.00)
 - Max Pain Drift: 25,500 -> 25,500 (+0 pts)
-- Range Migration: Support 25,000 (prev: 25,500) | Resistance 25,500 (prev: 26,000)
+- Range Migration: Support 25,000 (prev: 25,000) | Resistance 25,500 (prev: 25,500)
 
 ### 🗓️ Tactical Weekly vs Structural Monthly Alignment
 - **Weekly Tactical View (01-Dec-2026):** `RANGEBOUND CONSOLIDATION` (ATM PCR: `0.99`)
